@@ -1,0 +1,15 @@
+{
+  "name": "beauty-service-copilot-presentation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Editable presentation build for the beauty customer-service copilot",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build:ppt": "node presentation/build_deck.js",
+    "check:ppt": "node --check presentation/build_deck.js"
+  },
+  "dependencies": {
+    "image-size": "1.2.1",
+    "pptxgenjs": "4.0.1"
+  }
+}

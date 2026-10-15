@@ -1,0 +1,2872 @@
+{
+  "source": "contest_mock",
+  "split_rule": "disjoint scene families / fixed SHA256 ordering",
+  "metrics_status": "not_measured; no human labels supplied",
+  "development": [
+    {
+      "sample_id": "S00001",
+      "analysis_point": "20974795108539.PNM",
+      "family_for_split_only": "破损换货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 10:18:45",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，收到的粉底液泵头是坏的，按不出来东西，急",
+            "order_id": "6920185815517983396",
+            "ticket_id": "BH919209358357"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920185815517983396",
+            "label": "订单",
+            "summary": "测试轻透粉底液30ml #N02自然色 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920185815517983396",
+              "商品货号": "XC33003",
+              "商品名称": "测试轻透粉底液30ml #N02自然色",
+              "数量": "1",
+              "实付金额(元)": "259",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-29 08:27:45",
+              "付款时间": "2026-04-29 08:50:45",
+              "发货时间": "2026-04-30 08:50:45",
+              "快递公司": "中通快递",
+              "物流单号": "773478190943155",
+              "赠品": "测试B5面膜体验装2片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，收到的粉底液泵头是坏的，按不出来东西，急",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00002",
+      "analysis_point": "32604956307662.PNM",
+      "family_for_split_only": "套装搭配推荐",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 10:37:44",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗？啊",
+            "order_id": "",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗？啊",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00004",
+      "analysis_point": "32171230124098.PNM",
+      "family_for_split_only": "错发色号",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 11:53:20",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "开什么玩笑，我买的#01赤茶红，发来个#05枫叶红，色差也太大了，这我没法用",
+            "order_id": "6920906372438643491",
+            "ticket_id": "BH699081699885"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920906372438643491",
+            "label": "订单",
+            "summary": "测试丝绒唇釉 #01赤茶红 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920906372438643491",
+              "商品货号": "XC30101",
+              "商品名称": "测试丝绒唇釉 #01赤茶红",
+              "数量": "2",
+              "实付金额(元)": "338",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 03:15:20",
+              "付款时间": "2026-04-27 03:18:20",
+              "发货时间": "2026-04-28 06:18:20",
+              "快递公司": "韵达快递",
+              "物流单号": "463435373928579",
+              "赠品": "测试舒缓面霜中样15ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "开什么玩笑，我买的#01赤茶红，发来个#05枫叶红，色差也太大了，这我没法用",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00007",
+      "analysis_point": "88958594295537.PNM",
+      "family_for_split_only": "漏发赠品",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 12:41:28",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，下单时页面写赠测试修护精华小样5ml，包裹里没有，是漏发了吗",
+            "order_id": "6920080450685916204",
+            "ticket_id": "BH142092289687"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920080450685916204",
+            "label": "订单",
+            "summary": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml) / 历史状态未提供",
+            "fields": {
+              "订单号": "6920080450685916204",
+              "商品货号": "XL19805",
+              "商品名称": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)",
+              "数量": "2",
+              "实付金额(元)": "1398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-25 04:20:28",
+              "付款时间": "2026-04-25 04:44:28",
+              "发货时间": "2026-04-26 11:44:28",
+              "快递公司": "中通快递",
+              "物流单号": "773480511527138",
+              "赠品": "测试丝绒唇釉小样1.2g"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，下单时页面写赠测试修护精华小样5ml，包裹里没有，是漏发了吗",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00008",
+      "analysis_point": "46474531103749.PNM",
+      "family_for_split_only": "正品鉴别咨询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 13:06:55",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "问一下，我收到的眼影盘和专柜买的味道不太一样，不会是假的吧",
+            "order_id": "6920931187555789136",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920931187555789136",
+            "label": "订单",
+            "summary": "测试九色眼影盘 #03落日大地 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920931187555789136",
+              "商品货号": "XC30903",
+              "商品名称": "测试九色眼影盘 #03落日大地",
+              "数量": "2",
+              "实付金额(元)": "298",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-19 06:41:55",
+              "付款时间": "2026-04-19 06:48:55",
+              "发货时间": "2026-04-20 15:48:55",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7646455340612",
+              "赠品": "测试丝绒唇釉小样1.2g"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "问一下，我收到的眼影盘和专柜买的味道不太一样，不会是假的吧",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00009",
+      "analysis_point": "39281097452618.PNM",
+      "family_for_split_only": "显示签收未收到",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 14:03:03",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "搞啥啊！物流显示昨天已签收，我根本没收到货！773766290769689",
+            "order_id": "6920252612630995076",
+            "ticket_id": "WL991067160"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920252612630995076",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920252612630995076",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 03:16:03",
+              "付款时间": "2026-04-27 03:19:03",
+              "发货时间": "2026-04-28 14:19:03",
+              "快递公司": "申通快递",
+              "物流单号": "773766290769689"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "搞啥啊！物流显示昨天已签收，我根本没收到货！773766290769689",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00012",
+      "analysis_point": "17741854816865.PNM",
+      "family_for_split_only": "预售尾款咨询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 15:22:30",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我拍了【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)的预售，尾款啥时候付呀",
+            "order_id": "6920779722072565829",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920779722072565829",
+            "label": "订单",
+            "summary": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml) / 历史状态未提供",
+            "fields": {
+              "订单号": "6920779722072565829",
+              "商品货号": "XL19805",
+              "商品名称": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)",
+              "数量": "2",
+              "实付金额(元)": "1398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-30 09:44:30",
+              "付款时间": "2026-04-30 09:53:30（定金）",
+              "赠品": "测试积雪草修护霜小样10ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我拍了【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)的预售，尾款啥时候付呀",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00014",
+      "analysis_point": "10996839285094.PNM",
+      "family_for_split_only": "物流查询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 16:13:57",
+        "messages": [
+          {
+            "role": "系统推送",
+            "text": "【测试会员日】您有一张满300减50券待领取，有效期3天，点击店铺首页领取哦~",
+            "order_id": "6920361931428337283",
+            "ticket_id": ""
+          },
+          {
+            "role": "买家",
+            "text": "你好，我的面膜发货了吗？单号多少，麻烦了",
+            "order_id": "6920361931428337283",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920361931428337283",
+            "label": "订单",
+            "summary": "测试B5多效修护面膜20片 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920361931428337283",
+              "商品货号": "XL22002",
+              "商品名称": "测试B5多效修护面膜20片",
+              "数量": "2",
+              "实付金额(元)": "398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-01 12:18:24",
+              "付款时间": "2026-05-01 12:35:24",
+              "发货时间": "2026-05-03 06:35:24",
+              "快递公司": "韵达快递",
+              "物流单号": "463434884597278"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我的面膜发货了吗？单号多少，麻烦了",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00015",
+      "analysis_point": "94931577622383.PNM",
+      "family_for_split_only": "过敏就医",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 16:33:33",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "必须给我个说法！用了你们面膜脸过敏，红肿刺痛，我人现在在医院！",
+            "order_id": "6920797553890280371",
+            "ticket_id": "BLFY61738711"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920797553890280371",
+            "label": "订单",
+            "summary": "测试B5多效修护面膜20片 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920797553890280371",
+              "商品货号": "XL22002",
+              "商品名称": "测试B5多效修护面膜20片",
+              "数量": "1",
+              "实付金额(元)": "199",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-19 14:03:33",
+              "付款时间": "2026-04-19 14:15:33",
+              "发货时间": "2026-04-21 03:15:33",
+              "快递公司": "申通快递",
+              "物流单号": "773742029650001"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "必须给我个说法！用了你们面膜脸过敏，红肿刺痛，我人现在在医院！",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00016",
+      "analysis_point": "72389479219117.PNM",
+      "family_for_split_only": "退款进度查询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 16:45:16",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，订单6920470451725491723的退款咋还没到账啊，都两天了",
+            "order_id": "6920470451725491723",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920470451725491723",
+            "label": "订单",
+            "summary": "测试舒缓修护面霜50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920470451725491723",
+              "商品货号": "XL10501",
+              "商品名称": "测试舒缓修护面霜50ml",
+              "数量": "1",
+              "实付金额(元)": "369",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-22 13:15:16",
+              "付款时间": "2026-04-22 13:37:16"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，订单6920470451725491723的退款咋还没到账啊，都两天了",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00017",
+      "analysis_point": "96419466529990.PNM",
+      "family_for_split_only": "预售尾款咨询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 17:48:15",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我拍了【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)的预售，尾款什么时候付呀",
+            "order_id": "6920343456060211393",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920343456060211393",
+            "label": "订单",
+            "summary": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml) / 历史状态未提供",
+            "fields": {
+              "订单号": "6920343456060211393",
+              "商品货号": "XL19805",
+              "商品名称": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)",
+              "数量": "2",
+              "实付金额(元)": "1398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-01 14:31:15",
+              "付款时间": "2026-05-01 14:51:15（定金）"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我拍了【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)的预售，尾款什么时候付呀",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00018",
+      "analysis_point": "45871297697700.PNM",
+      "family_for_split_only": "错发色号",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 19:50:07",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "开啥玩笑，我买的#05枫叶红，发来个#01赤茶红，色差也太大了，这我没法用...",
+            "order_id": "6920842605036203732",
+            "ticket_id": "BH697811247059"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920842605036203732",
+            "label": "订单",
+            "summary": "测试丝绒唇釉 #05枫叶红 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920842605036203732",
+              "商品货号": "XC30111",
+              "商品名称": "测试丝绒唇釉 #05枫叶红",
+              "数量": "1",
+              "实付金额(元)": "169",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 19:44:07",
+              "付款时间": "2026-04-27 20:05:07",
+              "发货时间": "2026-04-29 05:05:07",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7601736867218",
+              "赠品": "测试B5面膜体验装2片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "开啥玩笑，我买的#05枫叶红，发来个#01赤茶红，色差也太大了，这我没法用...",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00019",
+      "analysis_point": "54833398140503.PNM",
+      "family_for_split_only": "色号选择",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 20:53:14",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好",
+            "order_id": "",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00020",
+      "analysis_point": "41928949776187.PNM",
+      "family_for_split_only": "漏发赠品",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 21:05:14",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，下单时页面写赠测试修护精华小样5ml，包裹里没有，是漏发了吗",
+            "order_id": "6920701895536536178",
+            "ticket_id": "BH689247868745"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920701895536536178",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920701895536536178",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "1",
+              "实付金额(元)": "799",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-29 13:30:14",
+              "付款时间": "2026-04-29 13:34:14",
+              "发货时间": "2026-04-30 07:34:14",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1636894449902"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，下单时页面写赠测试修护精华小样5ml，包裹里没有，是漏发了吗",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00021",
+      "analysis_point": "42318398150041.PNM",
+      "family_for_split_only": "退款进度查询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 21:07:22",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，订单6920983614862636274的退款咋还没到账啊，都两天了呢",
+            "order_id": "6920983614862636274",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920983614862636274",
+            "label": "订单",
+            "summary": "测试水润保湿眼霜15ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920983614862636274",
+              "商品货号": "XL10153",
+              "商品名称": "测试水润保湿眼霜15ml",
+              "数量": "1",
+              "实付金额(元)": "289",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-21 16:13:22",
+              "付款时间": "2026-04-21 16:15:22"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，订单6920983614862636274的退款咋还没到账啊，都两天了呢",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00022",
+      "analysis_point": "82313431538182.PNM",
+      "family_for_split_only": "成分与肤质适配",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 21:20:26",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "客服在不在",
+            "order_id": "",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "客服在不在",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00026",
+      "analysis_point": "11402985818046.PNM",
+      "family_for_split_only": "七天无理由退货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 22:18:27",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，这个洗发水能七天无理由退吗？没开封呢",
+            "order_id": "6920288797534357965",
+            "ticket_id": "KOC2683305"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920288797534357965",
+            "label": "订单",
+            "summary": "测试轻盈控油洗发水500ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920288797534357965",
+              "商品货号": "XW45001",
+              "商品名称": "测试轻盈控油洗发水500ml",
+              "数量": "1",
+              "实付金额(元)": "129",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-28 17:09:27",
+              "付款时间": "2026-04-28 17:26:27",
+              "发货时间": "2026-04-29 14:26:27",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7634476026418"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，这个洗发水能七天无理由退吗？没开封呢",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00027",
+      "analysis_point": "40435748338122.PNM",
+      "family_for_split_only": "漏发赠品",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 22:38:29",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，下单时页面写赠测试发膜体验装30ml，包裹里没有，是漏发了吗",
+            "order_id": "6920673361421035519",
+            "ticket_id": "BH879131096583"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920673361421035519",
+            "label": "订单",
+            "summary": "测试温和氨基酸洁面乳120ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920673361421035519",
+              "商品货号": "XL21205",
+              "商品名称": "测试温和氨基酸洁面乳120ml",
+              "数量": "1",
+              "实付金额(元)": "98",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 16:34:29",
+              "付款时间": "2026-04-27 16:48:29",
+              "发货时间": "2026-04-29 04:48:29",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7676828813837",
+              "赠品": "测试丝绒唇釉小样1.2g"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，下单时页面写赠测试发膜体验装30ml，包裹里没有，是漏发了吗",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00028",
+      "analysis_point": "78953752355629.PNM",
+      "family_for_split_only": "拦截改址",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 22:55:13",
+        "messages": [
+          {
+            "role": "系统推送",
+            "text": "【测试上新】新品修护精华限时尝鲜价，前100名下单加赠中样，手慢无~",
+            "order_id": "6920221908704748785",
+            "ticket_id": "WL643271665"
+          },
+          {
+            "role": "买家",
+            "text": "你好！订单6920221908704748785我地址填错了，能改一下吗？还没到货",
+            "order_id": "6920221908704748785",
+            "ticket_id": "WL643271665"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920221908704748785",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920221908704748785",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-30 21:09:57",
+              "付款时间": "2026-04-30 21:26:57",
+              "发货时间": "2026-05-02 08:26:57",
+              "快递公司": "申通快递",
+              "物流单号": "773728063808753"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好！订单6920221908704748785我地址填错了，能改一下吗？还没到货",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00029",
+      "analysis_point": "66257464140742.PNM",
+      "family_for_split_only": "退款金额少退补打",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 23:03:56",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我退货退款到账了，但是少了23.5块，当时买的时候我可是付了运费险外的1598元",
+            "order_id": "6920316481414437285",
+            "ticket_id": "HV7607477945"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920316481414437285",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920316481414437285",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "2",
+              "实付金额(元)": "1598",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-15 13:38:56",
+              "付款时间": "2026-04-15 13:43:56",
+              "发货时间": "2026-04-16 09:43:56",
+              "快递公司": "中通快递",
+              "物流单号": "773415850905356",
+              "赠品": "测试积雪草修护霜小样10ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我退货退款到账了，但是少了23.5块，当时买的时候我可是付了运费险外的1598元",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    }
+  ],
+  "heldout": [
+    {
+      "sample_id": "S00003",
+      "analysis_point": "59042952103799.PNM",
+      "family_for_split_only": "保价申请被拒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 11:11:56",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "啥意思啊，我刚买没几天就降价40块，太坑了吧",
+            "order_id": "6920186002093740058",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920186002093740058",
+            "label": "订单",
+            "summary": "测试轻盈控油洗发水500ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920186002093740058",
+              "商品货号": "XW45001",
+              "商品名称": "测试轻盈控油洗发水500ml",
+              "数量": "2",
+              "实付金额(元)": "258",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-28 05:11:56",
+              "付款时间": "2026-04-28 05:18:56",
+              "发货时间": "2026-04-30 02:18:56",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1665939129882"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "啥意思啊，我刚买没几天就降价40块，太坑了吧",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00005",
+      "analysis_point": "35397577932819.PNM",
+      "family_for_split_only": "退款迟迟不到账",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 12:05:11",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "说好的原路退回呢？都一个礼拜了一分没到，急死了",
+            "order_id": "6920223542160114724",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920223542160114724",
+            "label": "订单",
+            "summary": "测试积雪草舒缓修护霜40ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920223542160114724",
+              "商品货号": "XL20401",
+              "商品名称": "测试积雪草舒缓修护霜40ml",
+              "数量": "1",
+              "实付金额(元)": "228",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-24 03:07:11",
+              "付款时间": "2026-04-24 03:20:11",
+              "赠品": "测试丝绒唇釉小样1.2g"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "说好的原路退回呢？都一个礼拜了一分没到，急死了",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00006",
+      "analysis_point": "77241371613918.PNM",
+      "family_for_split_only": "包裹少件",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 12:06:42",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，包裹到了但里面少了洗发水，箱子也没破，咋回事",
+            "order_id": "6920163607220643752",
+            "ticket_id": "WL190449095"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920163607220643752",
+            "label": "订单",
+            "summary": "测试轻盈控油洗发水500ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920163607220643752",
+              "商品货号": "XW45001",
+              "商品名称": "测试轻盈控油洗发水500ml",
+              "数量": "1",
+              "实付金额(元)": "129",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-30 04:23:42",
+              "付款时间": "2026-04-30 04:35:42",
+              "发货时间": "2026-05-02 08:35:42",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7647522345408",
+              "赠品": "测试舒缓面霜中样15ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，包裹到了但里面少了洗发水，箱子也没破，咋回事",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00010",
+      "analysis_point": "77746085712352.PNM",
+      "family_for_split_only": "泛红刺痒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 14:25:33",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我用了面膜以后全脸发红，还起了小疹子，有点痒，怎么回事啊捏",
+            "order_id": "6920932618149621705",
+            "ticket_id": "BLFY49330652"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920932618149621705",
+            "label": "订单",
+            "summary": "测试B5多效修护面膜20片 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920932618149621705",
+              "商品货号": "XL22002",
+              "商品名称": "测试B5多效修护面膜20片",
+              "数量": "2",
+              "实付金额(元)": "398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-19 07:38:33",
+              "付款时间": "2026-04-19 08:02:33",
+              "发货时间": "2026-04-20 06:02:33",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1636810083598",
+              "赠品": "测试卸妆棉便携装20片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我用了面膜以后全脸发红，还起了小疹子，有点痒，怎么回事啊捏",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00011",
+      "analysis_point": "36280612306748.PNM",
+      "family_for_split_only": "包裹破损",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 15:13:33",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "唉，无语了，刚拆的包裹，面霜瓶子直接碎了，玻璃渣混着精华洒得到处都是！哦",
+            "order_id": "6920654901868624795",
+            "ticket_id": "WL101842381"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920654901868624795",
+            "label": "订单",
+            "summary": "测试舒缓修护面霜50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920654901868624795",
+              "商品货号": "XL10501",
+              "商品名称": "测试舒缓修护面霜50ml",
+              "数量": "1",
+              "实付金额(元)": "369",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-02 08:11:33",
+              "付款时间": "2026-05-02 08:31:33",
+              "发货时间": "2026-05-03 17:31:33",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1610733162312",
+              "赠品": "测试B5面膜体验装2片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "唉，无语了，刚拆的包裹，面霜瓶子直接碎了，玻璃渣混着精华洒得到处都是！哦",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00013",
+      "analysis_point": "67186543908100.PNM",
+      "family_for_split_only": "优惠与赠品咨询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 15:58:36",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "hi 在吗呢",
+            "order_id": "",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "hi 在吗呢",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00023",
+      "analysis_point": "93591189567742.PNM",
+      "family_for_split_only": "包裹少件",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 21:35:16",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，包裹到了但里面少了眼影盘，箱子也没破，咋回事",
+            "order_id": "6920381227503627930",
+            "ticket_id": "WL698348054"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920381227503627930",
+            "label": "订单",
+            "summary": "测试九色眼影盘 #03落日大地 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920381227503627930",
+              "商品货号": "XC30903",
+              "商品名称": "测试九色眼影盘 #03落日大地",
+              "数量": "1",
+              "实付金额(元)": "149",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 12:45:16",
+              "付款时间": "2026-04-27 12:58:16",
+              "发货时间": "2026-04-29 10:58:16",
+              "快递公司": "韵达快递",
+              "物流单号": "463478499903000",
+              "赠品": "测试卸妆棉便携装20片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，包裹到了但里面少了眼影盘，箱子也没破，咋回事",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00024",
+      "analysis_point": "76916875954946.PNM",
+      "family_for_split_only": "仅退款疑似异常",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 21:38:52",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们发的啥玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没有退什么退",
+            "order_id": "6920681898386530047",
+            "ticket_id": "KOC3195289"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920681898386530047",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920681898386530047",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "1",
+              "实付金额(元)": "799",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-29 17:33:52",
+              "付款时间": "2026-04-29 17:55:52",
+              "发货时间": "2026-05-01 13:55:52",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1608199997186"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们发的啥玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没有退什么退",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00025",
+      "analysis_point": "47162202317945.PNM",
+      "family_for_split_only": "优惠与赠品咨询",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-05 22:04:03",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗?",
+            "order_id": "",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗?",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00032",
+      "analysis_point": "23313500243043.PNM",
+      "family_for_split_only": "退款迟迟不到账",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 12:17:21",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "订单6920174711577070228退款到底去哪了，别踢皮球让我找银行",
+            "order_id": "6920174711577070228",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920174711577070228",
+            "label": "订单",
+            "summary": "测试九色眼影盘 #03落日大地 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920174711577070228",
+              "商品货号": "XC30903",
+              "商品名称": "测试九色眼影盘 #03落日大地",
+              "数量": "1",
+              "实付金额(元)": "149",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-20 05:03:21",
+              "付款时间": "2026-04-20 05:28:21",
+              "赠品": "测试护发精油小样10ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "订单6920174711577070228退款到底去哪了，别踢皮球让我找银行",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00033",
+      "analysis_point": "21655264716292.PNM",
+      "family_for_split_only": "包裹少件",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 14:25:52",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我买了两件咋只收到一件？6920675656664226609",
+            "order_id": "6920675656664226609",
+            "ticket_id": "WL120890165"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920675656664226609",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920675656664226609",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-29 05:00:52",
+              "付款时间": "2026-04-29 05:24:52",
+              "发货时间": "2026-05-01 05:24:52",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1601699080229"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我买了两件咋只收到一件？6920675656664226609",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00034",
+      "analysis_point": "44097604564832.PNM",
+      "family_for_split_only": "直播间承诺纠纷",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 14:29:22",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，我昨晚直播间下的单，主播明明说下单送正装小样一套，怎么发来只有正装？，急",
+            "order_id": "6920272791550024041",
+            "ticket_id": "BH758933100232"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920272791550024041",
+            "label": "订单",
+            "summary": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml) / 历史状态未提供",
+            "fields": {
+              "订单号": "6920272791550024041",
+              "商品货号": "XL19805",
+              "商品名称": "【预售】测试焕活紧致礼盒(面霜50ml+精华30ml)",
+              "数量": "2",
+              "实付金额(元)": "1398",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-02 13:42:22",
+              "付款时间": "2026-05-02 13:53:22",
+              "发货时间": "2026-05-04 05:53:22",
+              "快递公司": "中通快递",
+              "物流单号": "773479980155421"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，我昨晚直播间下的单，主播明明说下单送正装小样一套，怎么发来只有正装？，急",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00038",
+      "analysis_point": "98600275786247.PNM",
+      "family_for_split_only": "退货运费报销",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 16:20:44",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，上次退货说好运费你们报销的，钱一直都没收到，单号YT7696503801519，谢谢",
+            "order_id": "6920947277927059788",
+            "ticket_id": "HV5725862244"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920947277927059788",
+            "label": "订单",
+            "summary": "测试轻透粉底液30ml #01自然白 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920947277927059788",
+              "商品货号": "XC33002",
+              "商品名称": "测试轻透粉底液30ml #01自然白",
+              "数量": "1",
+              "实付金额(元)": "259",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-14 09:32:44",
+              "付款时间": "2026-04-14 09:56:44",
+              "发货时间": "2026-04-16 13:56:44",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7696503801519",
+              "赠品": "测试B5面膜体验装2片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，上次退货说好运费你们报销的，钱一直都没收到，单号YT7696503801519，谢谢",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00040",
+      "analysis_point": "57236759853479.PNM",
+      "family_for_split_only": "仅退款疑似异常",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 20:02:37",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们发的什么玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没有退什么退",
+            "order_id": "6920804559991914721",
+            "ticket_id": "KOC5432473"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920804559991914721",
+            "label": "订单",
+            "summary": "测试氨基酸洁面泡沫150ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920804559991914721",
+              "商品货号": "XL11504",
+              "商品名称": "测试氨基酸洁面泡沫150ml",
+              "数量": "1",
+              "实付金额(元)": "159",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-30 13:15:37",
+              "付款时间": "2026-04-30 13:40:37",
+              "发货时间": "2026-05-02 09:40:37",
+              "快递公司": "韵达快递",
+              "物流单号": "463484405568551",
+              "赠品": "测试发膜体验装30ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们发的什么玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没有退什么退",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00042",
+      "analysis_point": "70535889565058.PNM",
+      "family_for_split_only": "保价申请被拒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-06 22:15:44",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "啥意思啊，我刚买没几天就降价40块，太坑了吧",
+            "order_id": "6920692330341928503",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920692330341928503",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920692330341928503",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-30 17:47:44",
+              "付款时间": "2026-04-30 17:51:44",
+              "发货时间": "2026-05-02 13:51:44",
+              "快递公司": "韵达快递",
+              "物流单号": "463462915105218",
+              "赠品": "测试卸妆棉便携装20片"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "啥意思啊，我刚买没几天就降价40块，太坑了吧",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00043",
+      "analysis_point": "48800702009357.PNM",
+      "family_for_split_only": "催发货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 10:39:22",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "咋还不发货啊，我等着用呢哦",
+            "order_id": "6920230019870235610",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920230019870235610",
+            "label": "订单",
+            "summary": "测试净澈卸妆水300ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920230019870235610",
+              "商品货号": "XL21204",
+              "商品名称": "测试净澈卸妆水300ml",
+              "数量": "2",
+              "实付金额(元)": "256",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-06 03:51:22",
+              "付款时间": "2026-05-06 03:57:22",
+              "赠品": "测试积雪草修护霜小样10ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "咋还不发货啊，我等着用呢哦",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00046",
+      "analysis_point": "46292243631488.PNM",
+      "family_for_split_only": "退货运费报销",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 12:13:28",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗，退货运费8.8元啥时候给我？都一星期了！",
+            "order_id": "6920230064007212002",
+            "ticket_id": "HV5972454959"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920230064007212002",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920230064007212002",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-16 02:26:28",
+              "付款时间": "2026-04-16 02:50:28",
+              "发货时间": "2026-04-16 23:50:28",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1627416150982"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗，退货运费8.8元啥时候给我？都一星期了！",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00048",
+      "analysis_point": "84743369627396.PNM",
+      "family_for_split_only": "退款迟迟不到账",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 14:12:59",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "退款显示成功五天了，我卡里根本没收到钱，你们是不是骗人的",
+            "order_id": "6920071889989423403",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920071889989423403",
+            "label": "订单",
+            "summary": "测试轻润护发精油50ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920071889989423403",
+              "商品货号": "XW40503",
+              "商品名称": "测试轻润护发精油50ml",
+              "数量": "1",
+              "实付金额(元)": "119",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-21 12:42:59",
+              "付款时间": "2026-04-21 12:52:59"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "退款显示成功五天了，我卡里根本没收到钱，你们是不是骗人的",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00050",
+      "analysis_point": "21618851626141.PNM",
+      "family_for_split_only": "包裹破损",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 15:28:48",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "无语了，刚拆的包裹，精华瓶子直接碎了，玻璃渣混着精华洒得到处都是！",
+            "order_id": "6920950249822526532",
+            "ticket_id": "WL968485853"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920950249822526532",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920950249822526532",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "2",
+              "实付金额(元)": "1598",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-27 14:50:48",
+              "付款时间": "2026-04-27 15:08:48",
+              "发货时间": "2026-04-28 14:08:48",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1613835389285",
+              "赠品": "测试修护精华小样5ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "无语了，刚拆的包裹，精华瓶子直接碎了，玻璃渣混着精华洒得到处都是！",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00053",
+      "analysis_point": "54268760586395.PNM",
+      "family_for_split_only": "大促价保补差",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 16:15:33",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们也太过分了，我买完一周就降40块，不给补差价我就退货重拍，运费你们自己想哦",
+            "order_id": "6920432671071165790",
+            "ticket_id": "HV1579311943"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920432671071165790",
+            "label": "订单",
+            "summary": "测试九色眼影盘 #03落日大地 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920432671071165790",
+              "商品货号": "XC30903",
+              "商品名称": "测试九色眼影盘 #03落日大地",
+              "数量": "2",
+              "实付金额(元)": "298",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-02 07:39:33",
+              "付款时间": "2026-05-02 08:00:33",
+              "发货时间": "2026-05-03 02:00:33",
+              "快递公司": "中通快递",
+              "物流单号": "773453102032756"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们也太过分了，我买完一周就降40块，不给补差价我就退货重拍，运费你们自己想哦",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00055",
+      "analysis_point": "76675378276515.PNM",
+      "family_for_split_only": "大促价保补差",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 16:30:39",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们也太过分了，我买完一周就降40块，不给补差价我就退货重拍，运费你们自己想...",
+            "order_id": "6920036676846030516",
+            "ticket_id": "HV8934839806"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920036676846030516",
+            "label": "订单",
+            "summary": "测试丝绒唇釉 #05枫叶红 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920036676846030516",
+              "商品货号": "XC30111",
+              "商品名称": "测试丝绒唇釉 #05枫叶红",
+              "数量": "1",
+              "实付金额(元)": "169",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-01 15:12:39",
+              "付款时间": "2026-05-01 15:21:39",
+              "发货时间": "2026-05-03 17:21:39",
+              "快递公司": "中通快递",
+              "物流单号": "773430024612938"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们也太过分了，我买完一周就降40块，不给补差价我就退货重拍，运费你们自己想...",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00058",
+      "analysis_point": "39654157618236.PNM",
+      "family_for_split_only": "泛红刺痒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 17:31:31",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗？急！昨晚用了面膜，今早额头又红又痒，是不是过敏了",
+            "order_id": "6920159387903549147",
+            "ticket_id": "BLFY13780992"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920159387903549147",
+            "label": "订单",
+            "summary": "测试B5多效修护面膜20片 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920159387903549147",
+              "商品货号": "XL22002",
+              "商品名称": "测试B5多效修护面膜20片",
+              "数量": "1",
+              "实付金额(元)": "199",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-23 13:46:31",
+              "付款时间": "2026-04-23 14:05:31",
+              "发货时间": "2026-04-25 05:05:31",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7621627111359",
+              "赠品": "测试修护精华小样5ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗？急！昨晚用了面膜，今早额头又红又痒，是不是过敏了",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00059",
+      "analysis_point": "28754463706652.PNM",
+      "family_for_split_only": "仅退款疑似异常",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 17:32:52",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们发的什么玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没退什么退",
+            "order_id": "6920621990731110707",
+            "ticket_id": "KOC7263722"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920621990731110707",
+            "label": "订单",
+            "summary": "测试B5多效修护面膜20片 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920621990731110707",
+              "商品货号": "XL22002",
+              "商品名称": "测试B5多效修护面膜20片",
+              "数量": "1",
+              "实付金额(元)": "199",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-01 17:21:52",
+              "付款时间": "2026-05-01 17:24:52",
+              "发货时间": "2026-05-03 05:24:52",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1623842505817"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们发的什么玩意儿，箱子打开里面是空的！我要仅退款，不退货啊，货都没退什么退",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00060",
+      "analysis_point": "82797042268109.PNM",
+      "family_for_split_only": "保价申请被拒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 18:32:19",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "啥意思啊，我刚买没几天就降价30块，太坑了吧啊",
+            "order_id": "6920514762118795062",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920514762118795062",
+            "label": "订单",
+            "summary": "测试轻盈控油洗发水500ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920514762118795062",
+              "商品货号": "XW45001",
+              "商品名称": "测试轻盈控油洗发水500ml",
+              "数量": "2",
+              "实付金额(元)": "258",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-28 14:20:19",
+              "付款时间": "2026-04-28 14:31:19",
+              "发货时间": "2026-04-29 08:31:19",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1643531588084"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "啥意思啊，我刚买没几天就降价30块，太坑了吧啊",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00062",
+      "analysis_point": "76046610975823.PNM",
+      "family_for_split_only": "催发货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-07 19:41:12",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，订单6920413704354349960什么时候发货啊，付款两天了一直没动静",
+            "order_id": "6920413704354349960",
+            "ticket_id": ""
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920413704354349960",
+            "label": "订单",
+            "summary": "测试九色眼影盘 #03落日大地 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920413704354349960",
+              "商品货号": "XC30903",
+              "商品名称": "测试九色眼影盘 #03落日大地",
+              "数量": "1",
+              "实付金额(元)": "149",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-04 18:57:12",
+              "付款时间": "2026-05-04 19:04:12",
+              "赠品": "测试舒缓面霜中样15ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，订单6920413704354349960什么时候发货啊，付款两天了一直没动静",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00071",
+      "analysis_point": "29342838219061.PNM",
+      "family_for_split_only": "大促价保补差",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-08 11:44:48",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你们也太过分了，我买完一周就降100块，不给补差价我就退货重拍，运费你们自己想",
+            "order_id": "6920359873712366198",
+            "ticket_id": "HV7126972014"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920359873712366198",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920359873712366198",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "1",
+              "实付金额(元)": "799",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-03 04:45:48",
+              "付款时间": "2026-05-03 05:02:48",
+              "发货时间": "2026-05-05 01:02:48",
+              "快递公司": "中通快递",
+              "物流单号": "773474584950453"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你们也太过分了，我买完一周就降100块，不给补差价我就退货重拍，运费你们自己想",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00072",
+      "analysis_point": "17031742459724.PNM",
+      "family_for_split_only": "退货运费报销",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-08 11:45:07",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "你好，上次退货说好运费你们报销的，钱一直都没收到，单号SF1675303933404",
+            "order_id": "6920880404719813361",
+            "ticket_id": "HV7649616157"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920880404719813361",
+            "label": "订单",
+            "summary": "【预售】测试修护精华双支装30ml*2 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920880404719813361",
+              "商品货号": "XL19806",
+              "商品名称": "【预售】测试修护精华双支装30ml*2",
+              "数量": "1",
+              "实付金额(元)": "799",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-24 02:38:07",
+              "付款时间": "2026-04-24 02:41:07",
+              "发货时间": "2026-04-26 05:41:07",
+              "快递公司": "顺丰速运",
+              "物流单号": "SF1675303933404",
+              "赠品": "测试舒缓面霜中样15ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "你好，上次退货说好运费你们报销的，钱一直都没收到，单号SF1675303933404",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00076",
+      "analysis_point": "87876031612223.PNM",
+      "family_for_split_only": "质疑正品退货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-08 15:52:30",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "我在专柜对比了，你们发的粉底液膏体颜色不一样，质地也稀，是不是给我发的假货？！哦",
+            "order_id": "6920527885849331832",
+            "ticket_id": "KOC2531140"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920527885849331832",
+            "label": "订单",
+            "summary": "测试轻透粉底液30ml #N02自然色 / 历史状态未提供",
+            "fields": {
+              "订单号": "6920527885849331832",
+              "商品货号": "XC33003",
+              "商品名称": "测试轻透粉底液30ml #N02自然色",
+              "数量": "1",
+              "实付金额(元)": "259",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-02 06:29:30",
+              "付款时间": "2026-05-02 06:53:30",
+              "发货时间": "2026-05-04 10:53:30",
+              "快递公司": "申通快递",
+              "物流单号": "773766140701841",
+              "赠品": "测试修护精华小样5ml"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "我在专柜对比了，你们发的粉底液膏体颜色不一样，质地也稀，是不是给我发的假货？！哦",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00078",
+      "analysis_point": "89777175379155.PNM",
+      "family_for_split_only": "质疑正品退货",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-08 17:02:20",
+        "messages": [
+          {
+            "role": "系统推送",
+            "text": "【测试上新】新品修护精华限时尝鲜价，前100名下单加赠中样，手慢无~",
+            "order_id": "6920762215935119531",
+            "ticket_id": "KOC6843505"
+          },
+          {
+            "role": "买家",
+            "text": "我在专柜对比了，你们发的修护霜膏体颜色不一样，质地也稀，是不是给我发的假货？！",
+            "order_id": "6920762215935119531",
+            "ticket_id": "KOC6843505"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920762215935119531",
+            "label": "订单",
+            "summary": "测试积雪草舒缓修护霜40ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920762215935119531",
+              "商品货号": "XL20401",
+              "商品名称": "测试积雪草舒缓修护霜40ml",
+              "数量": "1",
+              "实付金额(元)": "228",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-05-03 12:30:51",
+              "付款时间": "2026-05-03 12:45:51",
+              "发货时间": "2026-05-04 06:45:51",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7688542165637",
+              "赠品": "测试丝绒唇釉小样1.2g"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "我在专柜对比了，你们发的修护霜膏体颜色不一样，质地也稀，是不是给我发的假货？！",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    },
+    {
+      "sample_id": "S00079",
+      "analysis_point": "41444390778681.PNM",
+      "family_for_split_only": "泛红刺痒",
+      "context": {
+        "source_type": "contest_mock",
+        "analysis_mode": "replay",
+        "basis_warning": "仅使用当时已存在的记录；附件没有历史状态，状态标为未知。",
+        "analysis_at": "2026-05-08 17:38:49",
+        "messages": [
+          {
+            "role": "买家",
+            "text": "在吗？急！昨晚用了洁面乳，今早额头又红又痒，是不是过敏了！",
+            "order_id": "6920676929380273867",
+            "ticket_id": "BLFY28579679"
+          }
+        ],
+        "evidence": [
+          {
+            "type": "order",
+            "id": "6920676929380273867",
+            "label": "订单",
+            "summary": "测试温和氨基酸洁面乳120ml / 历史状态未提供",
+            "fields": {
+              "订单号": "6920676929380273867",
+              "商品货号": "XL21205",
+              "商品名称": "测试温和氨基酸洁面乳120ml",
+              "数量": "2",
+              "实付金额(元)": "196",
+              "订单状态": "历史状态未提供",
+              "下单时间": "2026-04-23 07:58:49",
+              "付款时间": "2026-04-23 08:12:49",
+              "发货时间": "2026-04-24 23:12:49",
+              "快递公司": "圆通快递",
+              "物流单号": "YT7611027129564"
+            },
+            "basis": "replay"
+          }
+        ],
+        "service_history": {
+          "identity_basis": "unconfirmed",
+          "contacts_7d": [],
+          "refund_records_30d": [],
+          "messages": [],
+          "warning": ""
+        }
+      },
+      "buyer_message": "在吗？急！昨晚用了洁面乳，今早额头又红又痒，是不是过敏了！",
+      "human_annotation": {
+        "status": "pending",
+        "reviewer": null,
+        "intent": null,
+        "emotion": null,
+        "risk_level": null,
+        "expected_facts": [],
+        "supporting_evidence_ids": [],
+        "acceptable_next_action": null
+      }
+    }
+  ],
+  "development_pool_size": 96,
+  "heldout_pool_size": 42,
+  "notes": "Grouping reduces template overlap; unseen scene holdout is harder than random split."
+}

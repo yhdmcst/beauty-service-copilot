@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美妆客服 | 风险监控</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <script defer src="{{ url_for('static', filename='vendor/echarts.min.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='vendor/socket.io.min.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/risk_alerts.js') }}"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">◆</span> 美妆客服 <span class="divider">/</span> 风险监控</div>
+    <div class="top-actions"><a class="workbench-link" href="/workbench">客服副驾</a><a class="workbench-link" href="/evaluation">人工评估</a><span id="connection" class="connection">连接中</span><span id="clock"></span></div>
+  </header>
+  <main>
+    <div class="page-heading"><div><h1>风险预警</h1><p>会话监控 · 实时事件</p></div><span id="last-updated"></span></div>
+    <section class="metrics" aria-label="概览指标">
+      <article class="metric"><span>已分析会话 <small>累计去重</small></span><strong id="served">0</strong></article>
+      <article class="metric risk"><span>未关闭高风险会话</span><strong id="high-risk">0</strong></article>
+      <article class="metric"><span>建议采纳率</span><strong id="satisfaction">暂无审核</strong></article>
+      <article class="metric"><span>未关闭任务</span><strong id="alert-count">0</strong></article>
+    </section>
+    <section class="simulator" aria-labelledby="simulator-title">
+      <div class="section-title"><h2 id="simulator-title">会话演示</h2><span>输入虚构场景</span></div>
+      <form id="demo-form"><label for="demo-session">分析会话</label>
+        <div class="demo-input"><select id="demo-session" aria-label="分析会话"></select>
+          <input id="demo-message" maxlength="2000" required value="请核对当前订单和售后记录" autocomplete="off">
+          <button type="submit">分析会话</button></div>
+      </form>
+      <div class="demo-result" id="demo-result" aria-live="polite">选择会话后，风险与辅助结果将写入同一工作台记录。</div>
+    </section>
+    <section class="workspace">
+      <div class="main-column">
+        <div class="section-title"><h2>风险跟踪</h2><select id="alert-status" aria-label="风险状态">
+          <option value="">全部状态</option><option value="pending">待处理</option>
+          <option value="in_progress">处理中</option><option value="resolved">已完成</option>
+          <option value="cancelled">已取消</option>
+        </select></div>
+        <div class="alert-list" id="alerts" aria-live="polite"><p class="empty">暂无预警</p></div>
+        <div class="section-title chart-title"><h2>情绪趋势</h2><span>最近 40 次分析</span></div>
+        <div class="chart" id="emotion-chart" role="img" aria-label="情绪趋势"></div>
+      </div>
+      <aside class="side-column">
+        <div class="section-title"><h2>问题分布</h2><span>最近 100 次分析</span></div>
+        <div class="chart pie" id="intent-chart" role="img" aria-label="问题分布"></div>
+        <div class="section-title"><h2>推理成本</h2></div>
+        <dl class="costs"><div><dt>累计 Token</dt><dd id="tokens">0</dd></div>
+        <div><dt>已计价成本</dt><dd id="cost">¥0.0000</dd></div>
+        <div><dt>缓存命中率</dt><dd id="cache-rate">0%</dd></div></dl>
+        <p class="footnote" id="pricing-note">价格未配置时，成本不代表真实账单。</p>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

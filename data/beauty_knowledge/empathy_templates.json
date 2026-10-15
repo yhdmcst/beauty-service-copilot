@@ -1,0 +1,44 @@
+[
+  {
+    "scenario": "allergy_reaction",
+    "emotion": "allergy_anxiety",
+    "template": "\n                非常抱歉给您带来了这样的困扰😢 过敏确实很难受，您现在皮肤的{symptom}情况严重吗？\n                \n                建议您立即：\n                1. 停用该产品\n                2. 用清水轻柔洗净\n                3. 如果症状严重，建议就医\n                \n                关于售后：\n                - 我这边马上为您申请退货退款（无需寄回）\n                - 如需就医，请保留医院证明，我们将提供补贴\n                - 安排客服专员1对1跟进您的情况\n                \n                您的健康是我们最关心的，请您保重💕\n                \n                [已标记为高优先级处理]\n                ",
+    "priority": "CRITICAL",
+    "tags": [
+      "过敏",
+      "高风险",
+      "健康"
+    ]
+  },
+  {
+    "scenario": "effect_disappointment",
+    "emotion": "disappointed",
+    "template": "\n                理解您的感受{emoji}，美妆产品确实因人而异，每个人的肤质和吸收能力都不同。\n                \n                关于{product_name}的效果：\n                - 建议使用周期：{usage_period}\n                - 您目前使用了：{current_usage}\n                - 配合使用：{combo_suggestion}\n                \n                针对您的{skin_type}肤质，我还可以为您推荐：\n                {alternative_products}\n                \n                如果您实在不适合这款产品，我们支持：\n                - 7天内无理由退货\n                - 换购其他更适合您的产品\n                \n                希望能帮到您找到真正适合的产品💪\n                ",
+    "priority": "MEDIUM",
+    "tags": [
+      "效果",
+      "失望",
+      "个性化"
+    ]
+  },
+  {
+    "scenario": "price_concern",
+    "emotion": "price_dissatisfied",
+    "template": "\n                {emoji} 感谢您的关注！关于价格问题我来为您说明：\n                \n                我们的定价考虑：\n                - 正品保障：{brand}官方授权渠道\n                - 品质保证：新鲜日期，官方质检\n                - 服务保障：完善的售后服务\n                \n                目前的优惠：\n                {current_promotions}\n                \n                性价比建议：\n                {value_proposition}\n                \n                如果您对价格有顾虑，我可以为您：\n                1. 关注即将到来的促销活动\n                2. 推荐同等效果的性价比产品\n                3. 提供{discount_amount}优惠券\n                \n                我们的目标是让您买得放心、用得安心😊\n                ",
+    "priority": "LOW",
+    "tags": [
+      "价格",
+      "优惠"
+    ]
+  },
+  {
+    "scenario": "skin_type_consultation",
+    "emotion": "neutral",
+    "template": "\n                很高兴为您提供专业建议！💁‍♀️\n                \n                根据您描述的情况：\n                {user_description}\n                \n                您的肤质初步判断为：{skin_type}\n                \n                针对{skin_type}，使用{product_name}的建议：\n                ✓ 适用性：{suitability}\n                ✓ 使用方法：{usage_method}\n                ✓ 注意事项：{precautions}\n                ✓ 搭配建议：{pairing_suggestions}\n                \n                如果您还不确定，建议：\n                - 先购买小样试用\n                - 耳后或手腕内侧测试\n                - 小面积使用观察48小时\n                \n                有任何问题随时找我哦~\n                ",
+    "priority": "NORMAL",
+    "tags": [
+      "咨询",
+      "专业建议"
+    ]
+  }
+]

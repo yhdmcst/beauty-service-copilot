@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美妆客服共情副驾</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/workbench.css') }}">
+  <script defer src="{{ url_for('static', filename='js/workbench.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='vendor/socket.io.min.js') }}"></script>
+</head>
+<body>
+  <header class="wb-topbar">
+    <div class="wb-brand"><span class="wb-brand-mark">◆</span><span>美妆客服共情副驾</span></div>
+    <div class="wb-status"><a href="/evaluation">人工评估</a><a href="/dashboard">风险跟踪</a><span class="status-dot"></span>演示数据 · MOCK</div>
+  </header>
+  <main class="wb-layout">
+    <aside class="session-pane">
+      <div class="pane-head"><div><h1>接待列表</h1><p id="session-count">虚构会话</p></div><button id="refresh-sessions" class="icon-btn" title="刷新会话列表" aria-label="刷新会话列表">↻</button></div>
+      <label class="search-box"><span aria-hidden="true">⌕</span><input id="session-search" placeholder="搜索会话ID、买家或场景" autocomplete="off"></label>
+      <div id="session-list" class="session-list" aria-live="polite"><p class="empty">加载中</p></div>
+    </aside>
+    <section class="conversation-pane">
+      <div class="conversation-head">
+        <div><p class="eyebrow">当前会话</p><h2 id="buyer-name">选择一个会话</h2><p id="session-meta" class="muted">从左侧列表开始</p></div>
+        <span id="source-badge" class="source-badge">赛题 MOCK</span>
+      </div>
+      <div class="analysis-controls">
+        <label>分析时点<select id="analysis-point" aria-label="分析时点"></select></label>
+        <label>业务依据<select id="analysis-mode" aria-label="业务依据">
+          <option value="snapshot">附件快照</option><option value="replay">历史回放</option>
+        </select></label>
+      </div>
+      <p id="basis-warning" class="basis-warning"></p>
+      <div id="conversation" class="conversation"><p class="empty">等待加载会话</p></div>
+      <details class="timeline-wrap"><summary>服务时间线</summary><div id="timeline"></div></details>
+      <div class="composer">
+        <label for="message-input">客户消息</label>
+        <textarea id="message-input" maxlength="2000" placeholder="输入客户最新消息，或直接使用当前会话最后一条买家消息"></textarea>
+        <div class="composer-actions"><span id="request-status" role="status"></span><button id="assist-btn" class="primary-btn" disabled>生成辅助建议</button></div>
+      </div>
+    </section>
+    <aside class="assistant-pane">
+      <div class="assistant-head"><div><p class="eyebrow">右侧辅助区</p><h2>共情副驾</h2></div><span id="model-badge" class="model-badge">待分析</span></div>
+      <div class="safety-note">待人工审核</div>
+      <section class="assist-section">
+        <div class="section-label">服务摘要</div>
+        <p id="summary" class="summary">选择会话后生成</p>
+      </section>
+      <section class="assist-section"><div class="section-label">待核实事项</div><ul id="missing-info"></ul></section>
+      <section class="assist-section">
+        <div class="section-label">沟通重点</div>
+        <p id="communication-strategy" class="summary">尚未分析</p>
+        <ul id="communication-needs"></ul>
+        <div id="stated-preferences"></div>
+        <details><summary>已有资料</summary><ul id="provided-information"></ul></details>
+        <details><summary>消息依据与判断边界</summary><ul id="communication-basis"></ul></details>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">跨会话服务轨迹</div>
+        <p id="identity-basis" class="summary"></p>
+        <p id="service-counts" class="muted"></p>
+        <div id="identity-sessions"></div>
+        <div id="identity-candidates"></div>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">风险依据与情绪变化</div>
+        <p id="emotion-change" class="muted">尚未分析</p>
+        <ul id="risk-reasons"></ul>
+      </section>
+      <details class="assist-section"><summary>Agent 执行记录</summary><p id="analysis-record-id" class="muted"></p><ol id="trace"></ol></details>
+      <section class="signal-grid">
+        <div><span>情绪</span><strong id="emotion">—</strong></div>
+        <div><span>风险</span><strong id="risk">—</strong></div>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">关联证据</div>
+        <div id="evidence" class="evidence-list"><p class="muted">暂无</p></div>
+        <details><summary>业务声明校验</summary><ul id="claim-checks"></ul></details>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">知识检索门禁</div>
+        <p id="knowledge-gate" class="muted">尚未检索</p>
+        <div id="knowledge-results" class="evidence-list"></div>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">建议回复</div>
+        <div class="draft-wrap"><p id="draft" class="draft">等待生成建议</p><button id="use-draft" class="secondary-btn" disabled>编辑草稿</button></div>
+        <div id="review-editor" hidden>
+          <label for="reply-editor">客服回复草稿</label>
+          <textarea id="reply-editor" maxlength="1000"></textarea>
+          <label for="reviewer">审核人</label><input id="reviewer" maxlength="40" placeholder="姓名或工号">
+          <label for="review-reason">审核备注</label><input id="review-reason" maxlength="500" placeholder="拒绝时必填">
+          <div class="review-actions"><button id="approve-reply" class="primary-btn" disabled>确认采纳</button>
+            <button id="reject-reply" class="secondary-btn" disabled>拒绝草稿</button></div>
+          <p id="review-status" role="status"></p>
+        </div>
+      </section>
+      <section class="assist-section">
+        <div class="section-label">建议下一步</div>
+        <p id="next-action" class="next-action">—</p>
+        <button id="create-task" class="task-btn" disabled>创建人工跟进任务</button>
+      </section>
+      <section class="assist-section task-section">
+        <div class="section-label">跟进状态</div>
+        <div id="tasks" class="task-list"><p class="muted">暂无任务</p></div>
+        <details class="review-history"><summary>审核记录</summary><div id="reviews"></div></details>
+      </section>
+    </aside>
+  </main>
+  <dialog id="task-dialog">
+    <form id="task-form">
+      <h2 id="task-dialog-title">处理任务</h2>
+      <label for="task-owner">负责人</label><input id="task-owner" maxlength="40" placeholder="姓名或工号" required>
+      <label for="task-note">处置备注</label><textarea id="task-note" maxlength="500"></textarea>
+      <p id="task-error" role="alert"></p>
+      <div class="review-actions"><button id="task-submit" class="primary-btn" type="submit">确认</button>
+        <button id="task-cancel" class="secondary-btn" type="button">取消</button></div>
+    </form>
+  </dialog>
+  <dialog id="identity-dialog">
+    <form id="identity-form">
+      <h2>确认会话关联</h2>
+      <p id="identity-target" class="summary"></p>
+      <p class="basis-warning">脱敏昵称可能同名。确认只用于本机MOCK演示，不代表取得了平台消费者身份。</p>
+      <label for="identity-reviewer">确认人</label><input id="identity-reviewer" maxlength="40" placeholder="姓名或工号" required>
+      <label for="identity-reason">关联依据</label><textarea id="identity-reason" maxlength="500" required></textarea>
+      <p id="identity-error" role="alert"></p>
+      <div class="review-actions"><button id="identity-submit" class="primary-btn" type="submit">确认同一消费者</button>
+        <button id="identity-cancel" class="secondary-btn" type="button">取消</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

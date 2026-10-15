@@ -1,0 +1,28 @@
+{
+  "scope": "Pre-edit engineering wording expectations; not human labels or independent customer accuracy",
+  "human_gold": false,
+  "development": [
+    {"text":"快递盒没坏，里面这支遮瑕却只有空管","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"},
+    {"text":"包裹到了，清单里三盒只放两盒","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"瓶身碎了，箱子里面都是玻璃渣","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"},
+    {"text":"不是漏发，只想查快递轨迹","intent":"logistics_query","focus":"shipment_query","basic":"neutral"},
+    {"text":"退款没到，是不是骗人呀","intent":"refund_request","focus":"refund_status_or_amount","basic":"angry"},
+    {"text":"没有骗人，只查退款流水","intent":"refund_request","focus":"refund_status_or_amount","basic":"neutral"},
+    {"text":"照片已经发过，请别再让我提供照片，泵头按不出","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"},
+    {"text":"收到了少一支，现在申请退款","intent":"refund_request","focus":"refund_status_or_amount","basic":"neutral"}
+  ],
+  "validation": [
+    {"text":"收到的管子是空的，快递倒是已经到了","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"},
+    {"text":"瓶盖开裂，包装盒完整，能查售后吗","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"},
+    {"text":"盒内缺了一支乳液，帮我查装箱记录","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"买的是两盒，打开却只有一盒","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"三支只收到两支，不是物流没到","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"没有少件或破损，核下运单","intent":"logistics_query","focus":"shipment_query","basic":"neutral"},
+    {"text":"不是空管，东西完好，只问配方成分","intent":"ingredient_query","focus":"general_service","basic":"neutral"},
+    {"text":"说到骗钱，客服真的不是在敷衍我吗，查退款","intent":"refund_request","focus":"refund_status_or_amount","basic":"angry"},
+    {"text":"难道你们不是在骗人？钱到哪了，查退款","intent":"refund_request","focus":"refund_status_or_amount","basic":"angry"},
+    {"text":"他在说骗人，我没有生气，问怎么使用","intent":"usage_method","focus":"general_service","basic":"neutral"},
+    {"text":"已上传底标截图，但想退款，不问真假","intent":"refund_request","focus":"refund_status_or_amount","basic":"neutral"},
+    {"text":"收到泵头损坏，现在还要查物流单号","intent":"quality_issue","focus":"product_usability_or_damage","basic":"neutral"}
+  ]
+}

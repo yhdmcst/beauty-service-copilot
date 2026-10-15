@@ -1,0 +1,15 @@
+{
+  "source_type": "contest_mock",
+  "distribution": "sanitized_upload_copy",
+  "warning": "Derived virtual contest data, not production facts. Redistribution permission not confirmed.",
+  "tables": {
+    "不良反应工单": 10,
+    "售后退货工单": 18,
+    "物流工单": 15,
+    "线下打款工单": 13,
+    "聊天记录": 998,
+    "补发换货工单": 24,
+    "订单": 113
+  },
+  "transformations": "Business allowlist, pseudonymized buyer names, phone/email/account-text redaction. Source untouched."
+}

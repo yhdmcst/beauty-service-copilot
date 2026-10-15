@@ -1,0 +1,62 @@
+[
+  {
+    "query": "会不会过敏？",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "敏感肌能用吗",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "今天发货吗",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "如何申请发票",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "谢谢你",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这款面霜含烟酰胺吗",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "为什么价格比另一款贵",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "帮我看看适合干皮吗",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "多久能见效",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "怎么用",
+    "history": {},
+    "ground_truth": false,
+    "origin": "synthetic_template"
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "query": "用了之后脸上红肿刺痛",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "过敏了，起疹子",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "呼吸困难，脸很肿",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "要投诉到12315",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "我要给你们差评",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这件事我要曝光",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "想退货",
+    "history": {
+      "refund_count_30d": 2
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "再退款一次",
+    "history": {
+      "refund_count_30d": 3
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "和SK-II比较",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "雅诗兰黛比你们好",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "用了之后脸上红肿刺痛",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "过敏了，起疹子",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "呼吸困难，脸很肿",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "要投诉到12315",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "我要给你们差评",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这件事我要曝光",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "想退货",
+    "history": {
+      "refund_count_30d": 2
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "再退款一次",
+    "history": {
+      "refund_count_30d": 3
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "和SK-II比较",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "雅诗兰黛比你们好",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "用了之后脸上红肿刺痛",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "过敏了，起疹子",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "呼吸困难，脸很肿",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "要投诉到12315",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "我要给你们差评",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这件事我要曝光",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "想退货",
+    "history": {
+      "refund_count_30d": 2
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "再退款一次",
+    "history": {
+      "refund_count_30d": 3
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "和SK-II比较",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "雅诗兰黛比你们好",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "用了之后脸上红肿刺痛",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "过敏了，起疹子",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "呼吸困难，脸很肿",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "要投诉到12315",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "我要给你们差评",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这件事我要曝光",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "想退货",
+    "history": {
+      "refund_count_30d": 2
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "再退款一次",
+    "history": {
+      "refund_count_30d": 3
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "和SK-II比较",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "雅诗兰黛比你们好",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "用了之后脸上红肿刺痛",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "过敏了，起疹子",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "呼吸困难，脸很肿",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "要投诉到12315",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "我要给你们差评",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "这件事我要曝光",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "想退货",
+    "history": {
+      "refund_count_30d": 2
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "再退款一次",
+    "history": {
+      "refund_count_30d": 3
+    },
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "和SK-II比较",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  },
+  {
+    "query": "雅诗兰黛比你们好",
+    "history": {},
+    "ground_truth": true,
+    "origin": "synthetic_template"
+  }
+]

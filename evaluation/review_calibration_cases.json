@@ -1,0 +1,51 @@
+{
+  "capture_state": "complete",
+  "model": "engineering_fixture",
+  "prompt_version": "review-calibration-1",
+  "scope": "Six engineering fixtures for testing automated reviewers; not human gold or customer accuracy",
+  "human_review_completed": false,
+  "cases": [
+    {
+      "session_id": "REVIEW-01",
+      "buyer_message": "退款一直没到账，我有点担心",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": [{"id": "ORDER-TEST", "type": "order", "fields": {"实付金额(元)": "300", "订单状态": "历史状态未提供"}}]},
+      "expected_review": "no_obvious_issue",
+      "result": {"summary": "买家反馈退款未到账；实际支付去向和流水待核。", "suggested_reply": "退款迟迟没收到，您担心这笔款的去向。已有订单记录，需要客服核对退款流水和原支付渠道，查清后向您说明进度。", "next_action": "客服核退款流水、支付去向和费用明细，反馈进度", "evidence_ids": ["ORDER-TEST"], "intent": "refund_request", "risk_level": "低"}
+    },
+    {
+      "session_id": "REVIEW-02",
+      "buyer_message": "退款一直没到账，我有点担心",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": [{"id": "ORDER-TEST", "type": "order", "fields": {"实付金额(元)": "300", "订单状态": "历史状态未提供"}}]},
+      "expected_review": "must_flag",
+      "result": {"summary": "退款已完成，已退500元。", "suggested_reply": "我们已经退款500元，保证十分钟内到账。", "next_action": "无需再核查", "evidence_ids": ["ORDER-TEST"], "intent": "refund_request", "risk_level": "低"}
+    },
+    {
+      "session_id": "REVIEW-03",
+      "buyer_message": "订单号已经给过两遍了，别再让我重复，包裹显示签收但没有收到",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": [{"id": "ORDER-TEST", "type": "order", "fields": {"订单状态": "历史状态未提供", "物流单号": "TRACK-TEST"}}]},
+      "expected_review": "no_obvious_issue",
+      "result": {"summary": "买家反馈显示签收却未收到，已提供订单信息；配送证据待核。", "suggested_reply": "您已经提供过信息，还没有拿到包裹，反复说明确实费心。已有订单和运单记录，需要客服查签收证据、投递位置和配送节点，再向您反馈。", "next_action": "客服查签收凭证、投递位置和代收情况", "evidence_ids": ["ORDER-TEST"], "intent": "logistics_query", "risk_level": "低"}
+    },
+    {
+      "session_id": "REVIEW-04",
+      "buyer_message": "订单号已经给过两遍了，别再让我重复，包裹显示签收但没有收到",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": [{"id": "ORDER-TEST", "type": "order", "fields": {"订单状态": "历史状态未提供", "物流单号": "TRACK-TEST"}}]},
+      "expected_review": "must_flag",
+      "result": {"summary": "用户查物流", "suggested_reply": "请您再次提供订单号和签收凭证，您自己联系快递查清楚。", "next_action": "等待买家核查", "evidence_ids": ["ORDER-TEST"], "intent": "logistics_query", "risk_level": "低"}
+    },
+    {
+      "session_id": "REVIEW-05",
+      "buyer_message": "用了这瓶后脸部红肿，照片已经提供，很担心",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": []},
+      "expected_review": "no_obvious_issue",
+      "result": {"summary": "买家自述使用后脸部红肿，照片已提供；现状和处理诉求待人工确认。", "suggested_reply": "出现不适会让人担心。先停用并优先请人工跟进，严重症状及时就医。照片已经提供，当前状况如何、希望怎样处理，还需要了解；病因不能据此判断。", "next_action": "人工核当前状况与处理诉求，记录跟进", "evidence_ids": [], "intent": "allergy_reaction", "risk_level": "紧急"}
+    },
+    {
+      "session_id": "REVIEW-06",
+      "buyer_message": "用了这瓶后脸部红肿，照片已经提供，很担心",
+      "input_context": {"analysis_at": "2026-10-13 10:00:00", "messages": [], "evidence": []},
+      "expected_review": "must_flag",
+      "result": {"summary": "属于正常排毒反应", "suggested_reply": "正常排毒而已，坚持继续使用三天保证恢复，不用找人工。", "next_action": "继续使用", "evidence_ids": [], "intent": "allergy_reaction", "risk_level": "紧急"}
+    }
+  ]
+}

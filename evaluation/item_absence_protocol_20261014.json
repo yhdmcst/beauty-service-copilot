@@ -1,0 +1,15 @@
+{
+  "scope": "Engineering wording for concrete missing goods, not human annotations or blind accuracy",
+  "development": [
+    {"text":"盒子到了，但少了乳液，查装箱","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"这包清单有精华，可缺了精华","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"正装没放进去，箱子里只有说明","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"没有缺乳液，先查运单号","intent":"logistics_query","focus":"shipment_query","basic":"neutral"}
+  ],
+  "validation": [
+    {"text":"包裹少了洁面乳，其他都在","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"清单上的遮瑕漏了遮瑕，现在问售后","intent":"quality_issue","focus":"missing_items","basic":"neutral"},
+    {"text":"没有少件，箱子完好，查快递","intent":"logistics_query","focus":"shipment_query","basic":"neutral"},
+    {"text":"少了优惠券，查领取记录","intent":"coupon_query","focus":"general_service","basic":"neutral"}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "scope": "Engineering retrieval fixtures, not real brand evidence, training data or independent business accuracy",
+  "human_gold": false,
+  "documents": [
+    {"id": "K-ING", "title": "成分说明", "content": "成分表列出配方原料和标示成分。示例仅供工程测试，不作实际功效承诺。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-USE", "title": "使用方法", "content": "使用顺序与使用频率请依经过核对的商品说明。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-GIFT", "title": "活动赠品", "content": "活动赠品核查需要核对下单资格、赠品装箱及分包记录。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-DEL", "title": "配送轨迹", "content": "物流运单和配送节点需要核对承运方最新记录。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-REF", "title": "退款进度", "content": "退款去向核查需要核对退款流水、支付渠道和退款明细。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-SKIN", "title": "肤质信息", "content": "敏感肌、油皮和干皮是消费者自述的肤质信息，不能据此推断产品适配。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-INV", "title": "发票核查", "content": "开票申请应核对发票抬头和开票记录。", "source": "engineering_fixture", "verified": false},
+    {"id": "K-OWNER", "title": "任务跟进", "content": "负责人认领核查任务，记录处理备注并保留状态历史。", "source": "engineering_fixture", "verified": false}
+  ],
+  "queries": [
+    {"text": "商品有哪些配方原料", "expected_document_id": "K-ING"},
+    {"text": "想问使用顺序和频率", "expected_document_id": "K-USE"},
+    {"text": "赠品少了，是不是分包", "expected_document_id": "K-GIFT"},
+    {"text": "运单到了哪个配送节点", "expected_document_id": "K-DEL"},
+    {"text": "这笔退款原支付渠道有流水吗", "expected_document_id": "K-REF"},
+    {"text": "我是油皮，还有敏感肌顾虑", "expected_document_id": "K-SKIN"},
+    {"text": "查开票记录和抬头", "expected_document_id": "K-INV"},
+    {"text": "谁认领了任务，状态历史有备注吗", "expected_document_id": "K-OWNER"}
+  ]
+}

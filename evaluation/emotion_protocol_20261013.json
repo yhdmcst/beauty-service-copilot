@@ -1,0 +1,36 @@
+{
+  "scope": "Engineering-defined new emotion expressions, not human annotations or representative customer accuracy",
+  "label_contract": "Customer basic emotion and business scenario are separate; quoted third-party emotion is not the customer's emotion",
+  "development": [
+    {"text": "您建议过敏处理吗，目前未使用", "basic": "neutral", "scene": null},
+    {"text": "谢谢，请问是否适合油皮", "basic": "neutral", "scene": null},
+    {"text": "单号给过了，别再问了，这问题说了三遍", "basic": "angry", "scene": null},
+    {"text": "你们可真行，又让我等了三天", "basic": "angry", "scene": null},
+    {"text": "我说的是他生气，我自己没有生气", "basic": "neutral", "scene": null},
+    {"text": "请问投诉入口在哪，想了解流程", "basic": "neutral", "scene": null},
+    {"text": "非常满意，处理得很好，谢谢", "basic": "happy", "scene": "satisfaction"},
+    {"text": "退款还没到账，谢谢", "basic": "neutral", "scene": null},
+    {"text": "担心这个精华会刺激，尚未使用", "basic": "fearful", "scene": "allergy_anxiety"},
+    {"text": "用后脸上发红，很担心", "basic": "fearful", "scene": "allergy_anxiety"},
+    {"text": "不是不满意，问题已经处理好了", "basic": "happy", "scene": "satisfaction"},
+    {"text": "没有红肿也不担心，现在问物流", "basic": "neutral", "scene": null}
+  ],
+  "validation": [
+    {"text": "多谢，请核一下这个订单的付款时间", "basic": "neutral", "scene": null},
+    {"text": "感谢回复，目前只是问孕妇能否使用", "basic": "neutral", "scene": null},
+    {"text": "我朋友很生气，我只是问怎么处理", "basic": "neutral", "scene": null},
+    {"text": "客服说他担心，我自己并不担心", "basic": "neutral", "scene": null},
+    {"text": "这订单号已经提供两次，别让我重复说了", "basic": "angry", "scene": null},
+    {"text": "你们可真厉害，又让我等了五天", "basic": "angry", "scene": null},
+    {"text": "过敏问题处理需要哪些材料，我还没开始用", "basic": "neutral", "scene": null},
+    {"text": "请问如何投诉，能告诉我渠道吗", "basic": "neutral", "scene": null},
+    {"text": "不是投诉客服，只咨询投诉流程", "basic": "neutral", "scene": null},
+    {"text": "谢谢，不过这退款等得我很焦虑", "basic": "fearful", "scene": null},
+    {"text": "价格降了这么多，真不合理", "basic": "angry", "scene": "price_dissatisfaction"},
+    {"text": "商品很喜欢，包装也完好，感谢", "basic": "happy", "scene": "satisfaction"},
+    {"text": "没有生气，事情处理完了，我很满意", "basic": "happy", "scene": "satisfaction"},
+    {"text": "怕会过敏，目前没有用后不适", "basic": "fearful", "scene": "allergy_anxiety"},
+    {"text": "用了很久都没效果，太失望了", "basic": "sad", "scene": "effect_disappointment"},
+    {"text": "这件和另一件怎么选，拿不定主意", "basic": "neutral", "scene": "purchase_hesitation"}
+  ]
+}

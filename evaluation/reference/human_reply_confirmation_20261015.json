@@ -1,0 +1,19 @@
+{
+  "confirmed_on": "2026-10-15",
+  "source_revision": "compact-v9-item-issues-2",
+  "scope": "Human acceptance of 12 saved replies after assisted review and four edits; not independent model accuracy",
+  "human_review_completed": true,
+  "saw_automated_check_opinions": true,
+  "independent_blind_evaluation": false,
+  "original_ui_drafts_accepted_n": 8,
+  "revised_drafts_accepted_n": 4,
+  "final_texts_accepted_n": 12,
+  "pending_clarification_n": 0,
+  "application_generation_logic_changed": false,
+  "sent_to_buyers": false,
+  "reviewer_identity_omitted": true,
+  "original_capture_sha256": "7b3162359115ca2731f78859d7c8b885cfb0fc5b51feebe81f8802621a0abcc1",
+  "accepted_set_sha256": "6ce32eb60ec4158c8348b5c377a12762444c875e43c6675c805e2ce3f7238a70",
+  "human_accuracy": null,
+  "human_efficiency": null
+}

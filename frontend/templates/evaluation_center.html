@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美妆客服共情副驾 | 人工评估</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluation.css') }}">
+  <script defer src="{{ url_for('static', filename='js/evaluation.js') }}"></script>
+</head>
+<body>
+  <header class="ev-topbar">
+    <div><strong>客服副驾</strong><span>/</span><span>人工评估中心</span></div>
+    <nav><a href="/workbench">客服副驾</a><a href="/dashboard">风险跟踪</a></nav>
+  </header>
+  <main class="ev-shell">
+    <section class="ev-heading">
+      <div><p class="ev-kicker">评估记录</p><h1>人工评估</h1></div>
+      <div class="ev-progress"><span id="annotation-progress">加载中</span><span id="efficiency-progress">加载中</span></div>
+    </section>
+    <div class="ev-tabs" role="tablist">
+      <button class="ev-tab active" data-tab="annotation" role="tab">冻结样本标注</button>
+      <button class="ev-tab" data-tab="efficiency" role="tab">客服效率对照</button>
+    </div>
+    <section id="annotation-panel" class="ev-panel">
+      <div class="ev-grid">
+        <aside class="ev-list-pane">
+          <div class="ev-toolbar"><label>样本集<select id="annotation-split"><option value="heldout">冻结集</option><option value="development">开发集</option><option value="all">全部</option></select></label></div>
+          <div id="annotation-list" class="ev-list"><p class="ev-muted">加载中</p></div>
+        </aside>
+        <article class="ev-detail">
+          <div id="annotation-empty" class="ev-empty">选择左侧样本开始标注</div>
+          <div id="annotation-content" hidden>
+            <div class="ev-detail-head"><div><p id="sample-meta" class="ev-kicker"></p><h2 id="sample-title"></h2></div><div><span id="sample-status" class="ev-badge">待标注</span><button id="suggest-annotation" class="ev-secondary" type="button">生成辅助建议</button></div></div>
+            <div class="ev-callout" id="sample-warning"></div>
+            <div class="ev-context-grid"><section><h3>历史上下文</h3><div id="sample-messages" class="ev-messages"></div></section><section><h3>合法业务证据</h3><div id="sample-evidence" class="ev-evidence"></div></section></div>
+            <form id="annotation-form" class="ev-form">
+              <div class="ev-form-grid">
+                <label>意图<select id="ann-intent" required></select></label>
+                <label>情绪<select id="ann-emotion" required></select></label>
+                <label>风险等级<select id="ann-risk" required><option value="">请选择</option><option>低</option><option>中</option><option>高</option><option>紧急</option></select></label>
+                <label>审核人<input id="ann-reviewer" required maxlength="80" placeholder="姓名或工号"></label>
+                <label>标注依据<select id="ann-label-source" required><option value="human">人工自行判断</option><option value="assisted_human">参考候选后人工确认</option></select></label>
+              </div>
+              <label>可支持事实 <textarea id="ann-facts" rows="4" placeholder="每行一条；只写当前合法证据支持的事实"></textarea></label>
+              <label>支持证据 ID <input id="ann-evidence" placeholder="多个 ID 用逗号分隔"></label>
+              <label>可接受下一步 <textarea id="ann-action" rows="3" required placeholder="例如：核对物流工单后由人工回复，不承诺到达时间"></textarea></label>
+              <label>争议/备注 <textarea id="ann-notes" rows="2"></textarea></label>
+              <div class="ev-actions"><button class="ev-primary" type="submit">保存人工标注</button><span id="annotation-status" role="status"></span></div>
+            </form>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section id="efficiency-panel" class="ev-panel" hidden>
+      <div class="ev-efficiency-head"><div><h2>配对效率试验</h2><p class="ev-muted">同一任务分别完成传统方式与副驾方式，两次都必须真实操作；系统只计时和记录结果。</p></div><div id="efficiency-summary" class="ev-summary"></div></div>
+      <div id="efficiency-list" class="ev-efficiency-list"></div>
+    </section>
+    <section id="trial-panel" class="ev-panel" hidden>
+      <h2 id="trial-title"></h2>
+      <p id="trial-time" class="ev-muted"></p>
+      <div id="trial-context" class="ev-context-grid"></div>
+      <button id="trial-assist" class="ev-primary" type="button" hidden>生成辅助建议</button>
+      <p id="trial-draft" class="ev-callout" hidden></p>
+      <form id="trial-form" class="ev-form">
+        <label>我的处置方案<textarea id="trial-outcome" required rows="4" maxlength="500"></textarea></label>
+        <div class="ev-form-grid">
+          <label>遗漏事实数<input id="trial-missed" type="number" min="0" step="1" required></label>
+          <label>修改次数<input id="trial-edits" type="number" min="0" step="1" required></label>
+          <label>完成情况<select id="trial-success" required><option value="">请选择</option><option value="true">已完成</option><option value="false">未完成</option></select></label>
+        </div>
+        <label>复核备注<input id="trial-notes" maxlength="1000"></label>
+        <button class="ev-primary" type="submit">结束并记录</button>
+        <button id="trial-invalidate" class="ev-secondary" type="button">作废本次计时</button>
+        <span id="trial-status" role="status"></span>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

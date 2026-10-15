@@ -1,0 +1,2 @@
+# Optional CPU classification experiments; not required to run the workbench.
+scikit-learn==1.7.2

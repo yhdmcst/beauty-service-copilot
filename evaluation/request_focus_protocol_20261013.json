@@ -1,0 +1,31 @@
+{
+  "scope": "Engineering-defined development regressions and separately recorded expressions, not independent human gold",
+  "development": [
+    {"text": "不改地址了，我要退款", "intent": "refund_request", "focus": "refund_status_or_amount"},
+    {"text": "不查赠品，只问发货了没", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "不怀疑假货，只是色号发错了", "intent": "quality_issue", "focus": "sku_mismatch"},
+    {"text": "不用退货退款，只核对发货时间", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "没有申请退款，只想改地址", "intent": "order_query", "focus": "address_change"},
+    {"text": "我的退款还没到账", "intent": "refund_request", "focus": "refund_status_or_amount"},
+    {"text": "收到货没有赠品，帮查是否分包", "intent": "activity_inquiry", "focus": "promotion_or_gift"},
+    {"text": "用了面霜后脸肿了，想处理售后", "intent": "allergy_reaction", "focus": "adverse_reaction_report"}
+  ],
+  "validation": [
+    {"text": "不需要再改址，只想查这笔退款流水", "intent": "refund_request", "focus": "refund_status_or_amount"},
+    {"text": "不用问退款和退货，帮我核对运单号", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "先不咨询小样，问这件商品发没发货", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "无需查真伪，收到的是错误色号", "intent": "quality_issue", "focus": "sku_mismatch"},
+    {"text": "不申请退货，想核对包裹物流", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "不用查赠品或小样，只问我的订单地址能不能改", "intent": "order_query", "focus": "address_change"},
+    {"text": "不办理退款了，只想问尾款支付窗口", "intent": "activity_inquiry", "focus": "pre_sale_payment"},
+    {"text": "不怀疑批次真假，只问开票", "intent": "invoice_request", "focus": "general_service"},
+    {"text": "没有小样，活动不是说赠送吗", "intent": "activity_inquiry", "focus": "promotion_or_gift"},
+    {"text": "没有退款到账，退货早已寄回", "intent": "refund_request", "focus": "return_refund"},
+    {"text": "我不满意处理方案，申请退款", "intent": "refund_request", "focus": "refund_status_or_amount"},
+    {"text": "退货签收了，钱却退不出来", "intent": "refund_request", "focus": "return_refund"},
+    {"text": "没有红肿，现在只是查询物流", "intent": "logistics_query", "focus": "shipment_query"},
+    {"text": "不要求退款，但用了以后全脸发红", "intent": "allergy_reaction", "focus": "adverse_reaction_report"},
+    {"text": "这个精华没有效果，想知道怎么处理", "intent": "effect_inquiry", "focus": "general_service"},
+    {"text": "不是假货问题，收到的瓶子破损了", "intent": "quality_issue", "focus": "product_usability_or_damage"}
+  ]
+}
