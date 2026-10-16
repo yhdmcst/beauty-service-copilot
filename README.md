@@ -1,58 +1,74 @@
 # 美妆客服共情副驾
 
-面向美妆电商人工客服的本地工作台。把聊天、订单和售后工单放在一起，辅助判断当前问题、审核回复草稿，并把待核事项交给负责人跟进。不自动发送客户消息，不执行退款、补发或改址。
+面向美妆电商人工客服的参赛作品，围绕“看不清服务经过、跟不上未解决事项、判不准当前诉求”设计。工作台整合聊天、订单与售后工单，生成带依据的回复建议，并将待核事项交给人工持续跟进。
 
-对应赛题一“数据共情者 - 消费者的AI管家”。当前版本 `compact-v9-item-issues-2`；参赛要求、实现和文件状态见 [提交检查](docs/SUBMISSION_AUDIT_20261015.md)。
+对应赛题一“数据共情者 - 消费者的AI管家”。作品使用赛题虚构业务数据、本地开源模型Qwen3:8b与LangGraph工作流，展示从服务理解到人工处置的完整交互。
 
-## 运行
+## 设计亮点
 
-需要Python 3.11、完整Ollama环境和文本模型 `qwen3:8b`。在项目文件夹内执行：
+- **有时点的服务轨迹**：同屏核对聊天、订单和工单，历史回放排除后来产生的记录；跨会话关联由人工确认。
+- **按事项延续服务**：区分当前、暂缓、条件备选、撤销及已解决诉求，漏液解决后仍能继续跟进泵头问题。
+- **把共情落实到下一步**：沿用消费者已给的材料和肤质自述，回应具体等待与重复说明的负担，列出客服应查什么、必要时还需问什么。
+- **风险先登记**：风险识别先于模型生成，任务支持认领、期限、等待对象与重开，关联历次分析依据。
+- **可审核的生成**：结构校验、资料适用范围和业务声明检查共同约束草稿，原稿、修正与人工审核分别保存。
 
-```powershell
-uv venv --python 3.11 .venv
-uv pip install --python .venv\Scripts\python.exe -r requirements_runtime.txt
-Copy-Item .env.example .env
+## 快速运行
+
+需要Python 3.11及Ollama。安装Ollama后下载模型：
+
+```bash
 ollama pull qwen3:8b
 ```
 
-已有 `.env` 时保留自己的配置。模板使用本地Ollama默认11434端口，无云密钥；模型或运行时需在新机器安装，本仓库不提供权重。然后双击 `start_demo.cmd`，打开启动器显示的地址，默认从 `127.0.0.1:5000` 寻找可用端口。
+macOS / Linux：
+
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -r requirements_runtime.txt
+cp .env.example .env
+.venv/bin/python scripts/run_demo.py --port 5000
+```
+
+Windows PowerShell：
+
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements_runtime.txt
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe scripts\run_demo.py --port 5000
+```
+
+访问 `http://127.0.0.1:5000/`。Windows也可在完成安装后双击 `start_demo.cmd`。已有本机配置时保留原 `.env`。详细安装、模型检查与演示场景见 [运行指南](docs/QUICKSTART.md)。模型不可用时，页面显示降级建议。
+
+## 作品入口
 
 | 页面 | 用途 |
 | --- | --- |
-| `/workbench` | 会话、订单/工单、辅助建议、人工审核及跟进 |
-| `/dashboard` | 风险事项、负责人和处理状态 |
-| `/evaluation` | 当前机器的标注与可选效率对照 |
+| `/` | 项目首页与工作空间导航 |
+| `/workbench` | 服务记录、辅助建议、人工审核和跟进任务 |
+| `/dashboard` | 风险预警与处置状态 |
+| `/evaluation` | 场景标注与效率对照记录 |
 
-启动、停止、模型探测和可选依赖见 [运行指南](docs/QUICKSTART.md)。应用不需要Node、Docker、Redis或Qdrant；Node只在重新生成PPT等可选工具中使用。当前是回环地址原型，不要直接暴露公网。
+## 文件结构
 
-## 处理流程
+| 目录 | 内容 |
+| --- | --- |
+| `src/`、`frontend/` | Agent、数据处理、API及交互界面 |
+| `data/` | 虚构业务数据与场景知识示例 |
+| `evaluation/`、`tests/` | 评测工具、固定协议、结果证据和软件测试 |
+| `docs/` | 作品报告、技术设计、运行及评估说明 |
+| `presentation/` | 18页展示PPT、演示脚本与展示素材 |
+| `scripts/` | 启动、数据导入、模型检查和界面验证工具 |
 
-LangGraph执行 `evidence → safety → draft → verify → audit`。先查证据并登记风险，再用本地Qwen生成建议，核对结构和业务声明，保存分析及操作记录。客服决定是否修改、采纳或拒绝。
+## 验证结果
 
-历史回放排除分析时点之后的记录，未知历史状态不补写。脱敏昵称只给出关联候选，人工确认身份后才合并轨迹。已有资料保留消息来源；买家说发过照片，不等于附件已经收到或可用。详见 [技术方案](docs/ARCHITECTURE.md) 和 [Agent设计](docs/AGENT_DESIGN.md)。
+当前版本 `compact-v13-service-continuity-1`：软件回归441项通过、3项可选依赖检查跳过。20条固定工程协议的意图与处理焦点均匹配。本地Qwen3:8b完整回归19条成功生成、1条超时降级，全请求中位约10.13秒；工作流匹配结果包含降级案例。样本用于开发回归，评估方法与逐条结果见 [评估说明](docs/EVALUATION.md)。
 
-## 验证与成本
+## 参赛材料
 
-当前源码的软件回归为348项。原开发环境12个固定案例为11次生成加1次证据路径，合计8356 Token、系统中位约2.83秒。原30条人工标注的最终意图27/30、基础情绪同映射21/30、风险27/30都是已见样本事后回归，不是独立准确率。
+- [作品报告](docs/FINAL_PROJECT_REPORT.md)：场景洞察、创新设计与作品价值。
+- [18页展示材料](presentation/README.md)：可编辑PPT与演示视频脚本。
+- [Agent设计](docs/AGENT_DESIGN.md)、[技术架构](docs/ARCHITECTURE.md)。
+- [提交清单](docs/SUBMISSION_CHECKLIST.md)、[资料索引](docs/README.md)。
 
-紧凑输出、精确缓存和限用证据路径用于减少重复生成。历史协议交替对照总Token减少6.13%；本轮与V8-5仅差1 Token，不称新增显著降本。本人12条回复复核已完成：8条原V9可见草稿可用、4条改后认可，不称首轮12条全部正确，见 [复核汇总](docs/REPLY_REVIEW_SUMMARY_20261015.md)。改稿未替换自动生成逻辑，实际视频仍待录制，人工效率缺完整任务级计时。
-
-这些模型数字来自原输入，清理副本的昵称和字段不同，没有新机器的质量或性能保证。方法见 [评估说明](docs/EVALUATION.md)，软件及文件检查范围见 [上传验收](docs/UPLOAD_VALIDATION.md)。
-
-## 数据和文件
-
-随附138个虚构会话、998条消息、113笔订单、80张工单的清理副本。标注包是20条开发和30条待标注的空白模板，**不含原30条人工标签或个人数据库**。运行时记录在本机 `data/runtime/` 生成，默认不上传。
-
-数据、截图和PPT仍有赛题来源内容。公开再发布授权、源码许可证尚未确认，建议先用Private仓库；字段清理不替代授权。见 [数据说明](docs/DATA_POLICY.md) 和 [第三方声明](THIRD_PARTY_NOTICES.md)。
-
-- [项目报告](docs/FINAL_PROJECT_REPORT.md)、[赛题原文](docs/CONTEST_BRIEF.md)。
-- [15页PPT及视频脚本](presentation/README.md)。
-- [文档索引](docs/README.md)、[GitHub上传步骤](docs/GITHUB_UPLOAD.md)。
-
-软件测试：
-
-```powershell
-.\.venv\Scripts\python.exe -B -X utf8 -m pytest -q -p no:cacheprovider tests
-```
-
-测试另需开发依赖，见评估说明。没有安装可选研究依赖时，3项实库检查会明确跳过。
+作品以人工客服辅助流程为演示范围，知识示例用于展示检索和生成机制，无需接入真实品牌后台。应用保存建议与人工任务，由客服决定是否使用回复。数据来源见 [数据说明](docs/DATA_POLICY.md)，组件声明见 [第三方说明](THIRD_PARTY_NOTICES.md)。

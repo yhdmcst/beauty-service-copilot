@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>美妆客服 | 风险监控</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
   <script defer src="{{ url_for('static', filename='vendor/echarts.min.js') }}"></script>
   <script defer src="{{ url_for('static', filename='vendor/socket.io.min.js') }}"></script>
   <script defer src="{{ url_for('static', filename='js/risk_alerts.js') }}"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><span class="brand-mark">◆</span> 美妆客服 <span class="divider">/</span> 风险监控</div>
-    <div class="top-actions"><a class="workbench-link" href="/workbench">客服副驾</a><a class="workbench-link" href="/evaluation">人工评估</a><span id="connection" class="connection">连接中</span><span id="clock"></span></div>
-  </header>
+  {% include '_navigation.html' %}
   <main>
     <div class="page-heading"><div><h1>风险预警</h1><p>会话监控 · 实时事件</p></div><span id="last-updated"></span></div>
     <section class="metrics" aria-label="概览指标">

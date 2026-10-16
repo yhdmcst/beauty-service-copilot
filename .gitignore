@@ -1,35 +1,21 @@
-# Local environments and caches
+# Local environment and credentials
 .venv/
 venv/
 env/
-.uv-cache/
-.browsers/
 node_modules/
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-.idea/
-.vscode/
-
-# Credentials: the example contains no real keys
 .env
 .env.*
 !.env.example
 *.pem
 *.key
-*.pfx
-*.p12
 credentials*.json
 secrets*.json
 
-# User operation records and service files
+# Runtime records and generated evaluation output
 data/runtime/
 data/qdrant_storage/
 data/redis_data/
+evaluation/results/
 logs/
 *.log
 *.sqlite
@@ -37,39 +23,33 @@ logs/
 *.sqlite3
 *.db
 
-# Generated measurements, retaining the supplied demo screenshots
-evaluation/results/*
-!evaluation/results/submission_ui_20261010/
-evaluation/results/submission_ui_20261010/*
-!evaluation/results/submission_ui_20261010/*.png
-!evaluation/results/contest_ui_20261013/
-evaluation/results/contest_ui_20261013/*
-!evaluation/results/contest_ui_20261013/rehearsal/
-evaluation/results/contest_ui_20261013/rehearsal/*
-!evaluation/results/contest_ui_20261013/rehearsal/*.png
-!evaluation/results/communication_ui_20261013_v3/
-evaluation/results/communication_ui_20261013_v3/*
-!evaluation/results/communication_ui_20261013_v3/rehearsal/
-evaluation/results/communication_ui_20261013_v3/rehearsal/*
-!evaluation/results/communication_ui_20261013_v3/rehearsal/*.png
-!evaluation/results/mainline_accuracy_ui_20261014/
-evaluation/results/mainline_accuracy_ui_20261014/*
-!evaluation/results/mainline_accuracy_ui_20261014/rehearsal/
-evaluation/results/mainline_accuracy_ui_20261014/rehearsal/*
-!evaluation/results/mainline_accuracy_ui_20261014/rehearsal/*.png
+# Build and development caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.uv-cache/
+.browsers/
+.idea/
+.vscode/
 archive/
 dist/
 build/
 *.zip
 
-# Private official attachments
+# Original contest attachments and operating-system files
 contest_materials/
 data/private/
 *.xlsx
 *.docx
-
-# OS temporary files
 .DS_Store
 Thumbs.db
 Desktop.ini
 ~$*
+.~*
+*.tmp
+*.bak
+*.swp

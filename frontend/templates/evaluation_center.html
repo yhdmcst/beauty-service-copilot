@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>美妆客服共情副驾 | 人工评估</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluation.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
   <script defer src="{{ url_for('static', filename='js/evaluation.js') }}"></script>
 </head>
 <body>
-  <header class="ev-topbar">
-    <div><strong>客服副驾</strong><span>/</span><span>人工评估中心</span></div>
-    <nav><a href="/workbench">客服副驾</a><a href="/dashboard">风险跟踪</a></nav>
-  </header>
+  {% include '_navigation.html' %}
   <main class="ev-shell">
     <section class="ev-heading">
       <div><p class="ev-kicker">评估记录</p><h1>人工评估</h1></div>

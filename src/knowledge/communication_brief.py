@@ -30,20 +30,31 @@ SKIN_CUE = re.compile(
 
 def communication_brief(context: dict, message: str, signals: dict) -> dict:
     """Never infer personality, diagnosis, product fit or an unconfirmed identity."""
-    rows = context.get("service_history", {}).get("messages", []) + context.get("messages", [])
+    history = context.get("service_history", {})
+    own = context.get("session_id") or signals.get("session_id", "")
+    confirmed = set(history.get("confirmed_session_ids", [])) if history.get("identity_basis", "unconfirmed") != "unconfirmed" else set()
+    rows = context.get("messages", []) + [row for row in history.get("messages", [])
+                                            if row.get("session_id") in confirmed]
     point = context.get("analysis_point", "")
     cutoff = context.get("analysis_at", "")
     buyers = [
         row for row in rows if row.get("角色") == "买家"
         and row.get("message_id") != point
-        and (not cutoff or not row.get("发送时间") or row["发送时间"] <= cutoff)
+        and (not row.get("session_id") or row["session_id"] == own or row["session_id"] in confirmed)
+        and (not cutoff or row.get("发送时间") and row["发送时间"] <= cutoff)
     ]
     buyers.sort(key=lambda row: row.get("发送时间", ""))
     current = {
         "message_id": point, "发送时间": cutoff, "message_text": message,
         "session_id": signals.get("session_id", ""), "scope": "current_analysis_input",
     }
-    buyers = buyers[-6:] + [current]
+    runtime = []
+    if context.get("analysis_mode") == "snapshot":
+        runtime = [{**row, "scope": "local_snapshot_input"}
+                   for row in context.get("runtime_inputs", [])
+                   if row.get("session_id") == own and row.get("analysis_point") == point
+                   and row.get("角色") == "买家"][-6:]
+    buyers = buyers[-6:] + runtime + [current]
     needs, preferences, reasons = [], [], []
     seen = set()
     for row in buyers:

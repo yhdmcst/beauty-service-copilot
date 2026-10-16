@@ -1,0 +1,11 @@
+<header class="app-header">
+  <a class="app-brand" href="{{ url_for('index') }}"><span aria-hidden="true">◆</span> 美妆客服共情副驾</a>
+  <nav class="app-nav" aria-label="主导航">
+    {% for endpoint, label in [('index', '首页'), ('workbench', '客服工作台'), ('dashboard', '风险看板'), ('evaluation_center', '评估中心')] %}
+    <a href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+  <div class="app-meta">
+    {% if request.endpoint == 'dashboard' %}<span id="connection" class="connection">连接中</span><span id="clock"></span>{% else %}<span>演示数据 · MOCK</span>{% endif %}
+  </div>
+</header>

@@ -14,8 +14,8 @@ from pathlib import Path
 TRANSITIONS = {
     "pending": {"in_progress", "cancelled"},
     "in_progress": {"resolved", "cancelled"},
-    "resolved": set(),
-    "cancelled": set(),
+    "resolved": {"pending"},
+    "cancelled": {"pending"},
 }
 
 
@@ -52,6 +52,10 @@ class CaseStore:
                 created_at TEXT NOT NULL, data TEXT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS analyses_session ON analyses(session_id, created_at);
+            CREATE TABLE IF NOT EXISTS task_analyses (
+                task_id TEXT NOT NULL, analysis_id TEXT NOT NULL, linked_at TEXT NOT NULL,
+                PRIMARY KEY (task_id, analysis_id)
+            );
             CREATE TABLE IF NOT EXISTS feedback (
                 analysis_id TEXT PRIMARY KEY, decision TEXT NOT NULL,
                 edited_reply TEXT NOT NULL, reason TEXT NOT NULL,
@@ -63,6 +67,10 @@ class CaseStore:
             );
             CREATE INDEX IF NOT EXISTS consumer_group ON consumer_links(consumer_id);
         """)
+        columns = {row[1] for row in self._db.execute("PRAGMA table_info(tasks)")}
+        for column in ("due_at", "waiting_on"):
+            if column not in columns:
+                self._db.execute(f"ALTER TABLE tasks ADD COLUMN {column} TEXT NOT NULL DEFAULT ''")
         self._db.commit()
 
     def _audit(self, task_id: str, action: str, actor: str, note: str) -> None:
@@ -89,17 +97,44 @@ class CaseStore:
                 (session_id, risk_code, risk_code, task_type, risk_code),
             ).fetchone()
             if existing:
-                return self._task(dict(existing))
+                task = dict(existing)
+                if analysis_id:
+                    self._db.execute("INSERT OR IGNORE INTO task_analyses VALUES (?, ?, ?)",
+                                     (task["task_id"], analysis_id, now()))
+                ranks = {"low": 0, "medium": 1, "high": 2, "critical": 3}
+                if ranks[priority] > ranks[task["priority"]]:
+                    self._db.execute(
+                        "UPDATE tasks SET priority=?, updated_at=? WHERE task_id=?",
+                        (priority, now(), task["task_id"]),
+                    )
+                    self._audit(task["task_id"], "escalated", actor[:40],
+                                f"{task['priority']} → {priority}；{note[:400]}")
+                if note.strip() and note[:500] != task["note"]:
+                    self._db.execute(
+                        "UPDATE tasks SET note=?, updated_at=? WHERE task_id=?",
+                        (note[:500], now(), task["task_id"]),
+                    )
+                    self._audit(task["task_id"], "evidence_added", actor[:40], note[:500])
+                return self.get_task(task["task_id"])
             task_id, timestamp = str(uuid.uuid4()), now()
             self._db.execute(
-                "INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO tasks (task_id, session_id, task_type, note, status, owner, priority, risk_code, analysis_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (task_id, session_id, task_type[:80], note[:500], "pending",
                  owner[:40], priority, risk_code, analysis_id, timestamp, timestamp),
             )
             self._audit(task_id, "created", actor[:40], note[:500])
+            if analysis_id:
+                self._db.execute("INSERT OR IGNORE INTO task_analyses VALUES (?, ?, ?)",
+                                 (task_id, analysis_id, timestamp))
             return self.get_task(task_id)
 
     def _task(self, row: dict) -> dict:
+        row["analysis_ids"] = [entry[0] for entry in self._db.execute(
+            "SELECT analysis_id FROM task_analyses WHERE task_id=? ORDER BY linked_at, analysis_id", (row["task_id"],))]
+        if row.get("analysis_id") and row["analysis_id"] not in row["analysis_ids"]:
+            row["analysis_ids"].insert(0, row["analysis_id"])
+        row["overdue"] = bool(row.get("due_at") and row["status"] in {"pending", "in_progress"}
+                              and row["due_at"] < now())
         row["history"] = [dict(event) for event in self._db.execute(
             "SELECT action, actor, note, time FROM task_history WHERE task_id=? ORDER BY time",
             (row["task_id"],),
@@ -118,24 +153,71 @@ class CaseStore:
 
     def update_task(
         self, task_id: str, status: str, note: str = "", *, owner: str = "",
-        actor: str = "客服",
+        actor: str = "客服", due_at: str | None = None, waiting_on: str | None = None,
     ) -> dict:
         """Enforce lifecycle; closing requires a disposition note."""
         with self._lock, self._db:
             task = self.get_task(task_id)
-            if status not in TRANSITIONS[task["status"]]:
+            scheduling = due_at is not None or waiting_on is not None
+            if status not in TRANSITIONS[task["status"]] and not (scheduling and status == task["status"]):
                 raise ValueError("Task transition is not allowed")
+            if task["status"] in {"resolved", "cancelled"} and status == "pending" and not note.strip():
+                raise ValueError("A reopen reason is required")
+            if task["status"] in {"resolved", "cancelled"} and status == "pending":
+                duplicate = self._db.execute(
+                    """SELECT task_id FROM tasks WHERE session_id=? AND task_id<>?
+                    AND (risk_code=? AND ?<>'' OR task_type=? AND ?='')
+                    AND status IN ('pending', 'in_progress') LIMIT 1""",
+                    (task["session_id"], task_id, task["risk_code"], task["risk_code"], task["task_type"], task["risk_code"]),
+                ).fetchone()
+                if duplicate:
+                    raise ValueError("An active task already covers this risk; update that task instead")
+            deadline = task.get("due_at", "")
+            if due_at is not None:
+                if not isinstance(due_at, str):
+                    raise ValueError("due_at must be an ISO timestamp or empty string")
+                deadline = due_at
+                if due_at:
+                    try:
+                        parsed = datetime.fromisoformat(due_at.replace("Z", "+00:00"))
+                        if parsed.tzinfo is None:
+                            raise ValueError("Timezone required")
+                        deadline = parsed.astimezone(timezone.utc).isoformat()
+                    except (ValueError, TypeError):
+                        raise ValueError("due_at must include a valid date and timezone") from None
+            if waiting_on is not None and (not isinstance(waiting_on, str) or len(waiting_on) > 80):
+                raise ValueError("waiting_on must be text up to 80 characters")
             if status in {"resolved", "cancelled"} and not note.strip():
                 raise ValueError("A disposition note is required")
             assigned = owner.strip() or task["owner"] or actor.strip()
             if status == "in_progress" and not assigned:
                 raise ValueError("An owner is required")
             self._db.execute(
-                "UPDATE tasks SET status=?, note=?, owner=?, updated_at=? WHERE task_id=?",
-                (status, note[:500] or task["note"], assigned[:40], now(), task_id),
+                "UPDATE tasks SET status=?, note=?, owner=?, due_at=?, waiting_on=?, updated_at=? WHERE task_id=?",
+                (status, note[:500] or task["note"], assigned[:40], deadline,
+                 task.get("waiting_on", "") if waiting_on is None else waiting_on, now(), task_id),
             )
-            self._audit(task_id, status, actor[:40], note[:500])
+            event = "reopened" if task["status"] in {"resolved", "cancelled"} and status == "pending" else status
+            if scheduling:
+                actual_waiting = task.get("waiting_on", "") if waiting_on is None else waiting_on
+                self._audit(task_id, "scheduled", actor[:40], f"跟进时间：{deadline or '未设置'}；等待：{actual_waiting or '未设置'}")
+            self._audit(task_id, event, actor[:40], note[:500])
             return self.get_task(task_id)
+
+    def feedback_summary(self) -> dict:
+        """Observed review edits for triage, never training data auto-approval."""
+        with self._lock:
+            rows = [dict(row) for row in self._db.execute(
+                "SELECT f.*, a.data FROM feedback f JOIN analyses a ON f.analysis_id=a.analysis_id")]
+        counts = {name: sum(row["decision"] == name for row in rows) for name in ("accepted", "edited", "rejected")}
+        categories = {}
+        for row in rows:
+            if row["decision"] == "accepted":
+                continue
+            for code in json.loads(row["data"]).get("validation_flags", []) or ["human_semantic_review"]:
+                categories[code] = categories.get(code, 0) + 1
+        return {"reviewed_n": len(rows), "decisions": counts, "error_categories": categories,
+                "scope": "已发生的人工审核；规则标记是排查线索，不代表人工确认错误类型", "automatic_learning": False}
 
     def list_tasks(self, session_id: str | None = None, status: str | None = None) -> list[dict]:
         """Return active and closed tasks, optionally filtered."""
@@ -193,12 +275,12 @@ class CaseStore:
         with self._lock:
             if session_id:
                 rows = self._db.execute(
-                    "SELECT data FROM analyses WHERE session_id=? ORDER BY created_at DESC LIMIT ?",
+                    "SELECT data FROM analyses WHERE session_id=? ORDER BY created_at DESC, rowid DESC LIMIT ?",
                     (session_id, limit),
                 )
             else:
                 rows = self._db.execute(
-                    "SELECT data FROM analyses ORDER BY created_at DESC LIMIT ?", (limit,),
+                    "SELECT data FROM analyses ORDER BY created_at DESC, rowid DESC LIMIT ?", (limit,),
                 )
             return [json.loads(row["data"]) for row in rows]
 

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美妆客服共情副驾 | 首页</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
+</head>
+<body>
+  {% include '_navigation.html' %}
+  <main class="home-shell">
+    <section class="home-hero">
+      <div class="hero-copy">
+        <p class="home-eyebrow">美妆电商 · 客服辅助工作空间</p>
+        <h1>读懂每一次诉求，<br>跟进每一步服务。</h1>
+        <p class="hero-description">从会话和业务证据出发，生成回复建议、跟进服务风险，并记录人工评估。在一个入口，完成你的客服辅助流程。</p>
+        <a class="home-primary" href="{{ url_for('workbench') }}">进入客服工作台 <span aria-hidden="true">↗</span></a>
+      </div>
+      <aside class="home-guide" aria-labelledby="guide-title">
+        <p class="home-eyebrow" id="guide-title">第一次使用</p>
+        <ol>
+          <li><strong>查看会话与证据</strong><span>在工作台选择会话，查看聊天、订单及售后工单。</span></li>
+          <li><strong>生成并审核建议</strong><span>选择分析时点，生成辅助建议，人工确认回复草稿。</span></li>
+          <li><strong>跟进风险与评估</strong><span>处理人工任务，在看板追踪风险，在评估中心记录效果。</span></li>
+        </ol>
+      </aside>
+    </section>
+    <section class="home-modules" aria-labelledby="modules-title">
+      <div class="modules-heading"><h2 id="modules-title">选择你的工作空间</h2><p>随时通过顶部导航切换</p></div>
+      <div class="module-grid">
+        <a class="module-card" href="{{ url_for('workbench') }}">
+          <span class="module-number">01 / 接待与辅助</span><h3>客服工作台</h3>
+          <p>整合聊天、订单与工单，查看带证据的回复建议，审核草稿并创建跟进任务。</p>
+          <span class="module-tags">会话浏览 · AI 建议 · 人工审核</span><span class="module-link">进入工作台 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="module-card" href="{{ url_for('dashboard') }}">
+          <span class="module-number">02 / 风险与跟进</span><h3>风险看板</h3>
+          <p>查看风险预警、情绪趋势和问题分布，跟踪待处理事项与服务处置进展。</p>
+          <span class="module-tags">风险预警 · 任务跟踪 · 服务趋势</span><span class="module-link">查看风险看板 <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="module-card" href="{{ url_for('evaluation_center') }}">
+          <span class="module-number">03 / 质量与效果</span><h3>评估中心</h3>
+          <p>为冻结样本添加人工标注，完成客服效率对照，记录辅助建议的实际使用效果。</p>
+          <span class="module-tags">人工标注 · 效率对照 · 评估记录</span><span class="module-link">进入评估中心 <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
+    <footer class="home-footer">当前使用虚构 MOCK 演示数据。AI 建议须经人工审核，模型未连接时会提供降级建议。</footer>
+  </main>
+</body>
+</html>

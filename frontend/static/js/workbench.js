@@ -48,6 +48,10 @@ function resetAssist() {
   $("review-editor").hidden = true;
   $("use-draft").disabled = $("create-task").disabled = true;
   $("missing-info").replaceChildren();
+  $("request-plan").replaceChildren();
+  $("request-plan-review").textContent = "尚未分析";
+  $("service-state").replaceChildren();
+  $("reply-plan").replaceChildren();
   $("communication-strategy").textContent = "尚未分析";
   $("communication-needs").replaceChildren();
   $("stated-preferences").replaceChildren();
@@ -151,10 +155,12 @@ function renderServiceHistory(history) {
 async function loadSession(id, point) {
   const version = ++viewVersion;
   currentSession = id;
+  currentSessionData = null;
   requestedVersion = null;
   resetAssist();
   renderSessions();
   $("assist-btn").disabled = true;
+  $("message-input").disabled = true;
   $("request-status").textContent = "载入会话";
   $("tasks").replaceChildren();
   $("reviews").replaceChildren();
@@ -167,6 +173,7 @@ async function loadSession(id, point) {
     renderConversation(data);
     $("request-status").textContent = "";
     $("assist-btn").disabled = false;
+    $("message-input").disabled = false;
     await Promise.all([loadTasks(version), loadReviews(version)]);
   } catch (error) {
     if (version === viewVersion) $("request-status").textContent = error.message;
@@ -184,6 +191,19 @@ function renderAssist(result) {
     result.model_status === "rule_evidence" ? "证据规则建议" :
     result.model_status === "fallback" ? "降级待复核" : result.cache_hit ? "缓存草稿" : "模型草稿";
   $("missing-info").replaceChildren(...result.missing_info.map((text) => node("li", text)));
+  const plan = result.request_plan || {};
+  const requestStatus = { active: "当前诉求", inquiry: "规则咨询", deferred: "已排除或暂缓", cancelled: "买家已取消诉求", buyer_reported_resolved: "买家称已解决，非后台确认", conditional: "条件备选", historical: "历史诉求", rejected: "已排除" };
+  $("request-plan").replaceChildren(...(plan.items || []).map((item) => node(
+    "li", `${requestStatus[item.status] || "待核"} · ${item.label} · ${item.order_scope}；原话：${item.quote}`)));
+  $("request-plan-review").textContent = (plan.review_reasons || []).join("；") || "按原话提取的候选事项，订单对应关系仍需核实";
+  const state = result.service_state || {};
+  $("service-state").replaceChildren(...(state.issues || []).map((item) => node(
+    "li", `${item.label}${({pump: " · 泵头", leak: " · 漏液", missing: " · 少件"})[item.detail] || ""} · ${item.order_scope || "订单待核"} · ${item.status === "buyer_reported_resolved" ? "买家称已解决，非后台确认" : requestStatus[item.status] || "待核"} · ${item.basis.message_id || "当前输入"}：${item.basis.quote}`)));
+  (state.review_reasons || []).forEach((reason) => $("service-state").append(node("li", `待确认：${reason}`)));
+  const replyPlan = result.response_plan || {};
+  $("reply-plan").replaceChildren(node("li", replyPlan.staff_next_action || "待核查"),
+    ...(replyPlan.staff_checks || []).map((item) => node("li", item)),
+    ...(replyPlan.followup_candidates || []).map((item) => node("li", `${item.action}${item.reason ? `（${item.reason}）` : ""}`)));
   const brief = result.communication_brief || {};
   $("communication-strategy").textContent = brief.strategy || "结合当前问题核查后回复";
   $("communication-needs").replaceChildren(...(brief.needs || []).map((item) => node(
@@ -228,11 +248,11 @@ function renderAssist(result) {
   });
   const knowledge = result.knowledge || {};
   $("knowledge-gate").textContent =
-    `${knowledge.reason || "未检索"} · ${knowledge.can_auto_reply ? "可作为辅助依据" : "不可直接作为事实"} · 置信启发分 ${knowledge.confidence ?? 0}`;
+    `${knowledge.reason || "未检索"} · ${knowledge.can_auto_reply ? "有可引用资料" : knowledge.can_use_for_assistance ? "仅可辅助制定核查步骤，不证明业务事实" : "不可直接作为事实"} · 置信启发分 ${knowledge.confidence ?? 0}`;
   $("knowledge-results").replaceChildren(...(knowledge.retrieved_docs || []).map((doc) => {
     const row = node("div", "", "evidence");
     row.append(
-      node("strong", `${doc.title || "知识记录"} · ${doc.verified ? "已审核" : "未审核"}`),
+      node("strong", `${doc.title || "知识记录"} · ${doc.knowledge_type === "service_procedure" ? "工程核验流程，仅辅助" : doc.verified ? "已审核" : "未审核"}`),
       node("span", `${doc.source || "未知来源"}${doc.approved_product_claim ? " · 产品声明已批准" : ""}`),
     );
     return row;
@@ -250,9 +270,11 @@ async function loadTasks(version = viewVersion) {
     const row = node("article", "", "task");
     row.append(node("strong", `${task.task_type} · ${STATUS[task.status]}`),
       node("span", `负责人：${task.owner || "未分配"}`), node("span", task.note));
+    row.append(node("span", `跟进：${task.due_at ? new Date(task.due_at).toLocaleString("zh-CN") : "未设置"}${task.overdue ? " · 已逾期" : ""}；等待：${task.waiting_on || "未设置"}`));
+    if (task.analysis_ids?.length) row.append(node("span", `关联分析记录：${task.analysis_ids.length} 次；最新 ${task.analysis_ids.at(-1)}`));
     const actions = node("div", "", "task-actions");
     const options = task.status === "pending" ? [["认领", "in_progress"], ["取消任务", "cancelled"]] :
-      task.status === "in_progress" ? [["完成任务", "resolved"], ["取消任务", "cancelled"]] : [];
+      task.status === "in_progress" ? [["更新跟进", "in_progress"], ["完成任务", "resolved"], ["取消任务", "cancelled"]] : [["重新开启", "pending"]];
     options.forEach(([label, status]) => {
       const button = node("button", label);
       button.onclick = () => {
@@ -260,7 +282,10 @@ async function loadTasks(version = viewVersion) {
         $("task-dialog-title").textContent = label;
         $("task-owner").value = task.owner || $("reviewer").value;
         $("task-note").value = "";
-        $("task-note").required = status === "resolved" || status === "cancelled";
+        $("task-note").required = status === "resolved" || status === "cancelled" || status === "pending";
+        const localDue = task.due_at ? new Date(task.due_at) : null;
+        $("task-due").value = localDue ? new Date(localDue.getTime() - localDue.getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "";
+        $("task-waiting").value = task.waiting_on || "";
         $("task-error").textContent = "";
         $("task-dialog").showModal();
       };
@@ -269,17 +294,19 @@ async function loadTasks(version = viewVersion) {
     const history = node("details");
     history.append(node("summary", `操作历史 (${task.history.length})`));
     task.history.forEach((event) => history.append(node(
-      "div", `${STATUS[event.action] || "创建"} · ${event.actor} · ${event.time.slice(0, 19)} · ${event.note}`, "task-history")));
+      "div", `${STATUS[event.action] || ({created: "创建", escalated: "风险升级", evidence_added: "新增证据", reopened: "重新开启", scheduled: "更新跟进"})[event.action] || event.action} · ${event.actor} · ${new Date(event.time).toLocaleString("zh-CN")} · ${event.note}`, "task-history")));
     row.append(actions, history);
     $("tasks").append(row);
   });
   if (!data.tasks.length) $("tasks").append(node("p", "暂无任务", "muted"));
 }
 async function loadReviews(version = viewVersion) {
-  const data = await api(`/api/sessions/${encodeURIComponent(currentSession)}/analyses`);
+  const [data, summary] = await Promise.all([
+    api(`/api/sessions/${encodeURIComponent(currentSession)}/analyses`), api("/api/feedback/summary")]);
   if (version !== viewVersion) return;
   $("reviews").replaceChildren(...data.feedback.map((item) => node(
     "div", `${DECISION[item.decision]} · ${item.reviewer} · ${item.edited_reply || item.reason}`, "review-entry")));
+  $("feedback-summary").textContent = `本机全部会话：${summary.reviewed_n} 条审核，原稿采纳 ${summary.decisions.accepted}，修改后采纳 ${summary.decisions.edited}，拒绝 ${summary.decisions.rejected}。反馈用于人工排查，不自动学习。`;
 }
 async function loadSessions() {
   try {
@@ -364,11 +391,17 @@ $("create-task").onclick = async () => {
 $("task-form").onsubmit = async (event) => {
   event.preventDefault();
   if (!pendingTask) return;
+  if (pendingTask.version !== viewVersion) {
+    $("task-error").textContent = "会话已切换，请关闭后重新选择任务";
+    return;
+  }
   $("task-submit").disabled = true;
   try {
     await api(`/api/tasks/${pendingTask.task.task_id}`, "PATCH", {
       status: pendingTask.status, owner: $("task-owner").value,
       actor: $("task-owner").value, note: $("task-note").value,
+      due_at: $("task-due").value ? new Date($("task-due").value).toISOString() : "",
+      waiting_on: $("task-waiting").value,
     });
     const version = pendingTask.version;
     $("task-dialog").close();

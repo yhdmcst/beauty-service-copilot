@@ -8,6 +8,7 @@ import uuid
 from pathlib import Path
 
 from src.knowledge.vector_store import VectorStore
+from src.knowledge.knowledge_scope import eligible_document
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data" / "beauty_knowledge"
 
@@ -100,3 +101,13 @@ class RAGEngine:
                 raise ValueError("Reranker must not change knowledge content or approval.")
             fused = ranked
         return fused[:top_k]
+
+    def scoped_search(self, query: str, intent: str, context: dict | None = None, top_k: int = 5) -> list[dict]:
+        """Filter a full local candidate pool before top-k to avoid scope starvation.
+
+        For the small demo corpus this reuses existing indexes. A large remote
+        corpus should push filters to its backend rather than fetch all records.
+        """
+        count = max(len(self.documents), top_k)
+        return [doc for doc in self.hybrid_search(query, count)
+                if eligible_document(doc, intent, context)][:top_k]

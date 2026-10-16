@@ -22,7 +22,7 @@ if (Test-Path -LiteralPath $configuration) {
 function Test-DemoHealth([int]$Candidate) {
     try {
         $health = Invoke-RestMethod -Uri "http://127.0.0.1:$Candidate/health" -TimeoutSec 2
-        return $health.status -eq 'ok' -and $health.revision -eq 'workbench-v5' -and $health.evaluation_revision -eq 'manual-evaluation-v2' -and $health.assistance_revision -eq 'compact-v9-item-issues-2'
+        return $health.status -eq 'ok' -and $health.revision -eq 'workbench-v5' -and $health.evaluation_revision -eq 'manual-evaluation-v2' -and $health.assistance_revision -eq 'compact-v13-service-continuity-1'
     } catch {
         return $false
     }

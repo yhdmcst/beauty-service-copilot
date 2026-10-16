@@ -18,6 +18,8 @@ def evidence_draft(context: dict, message: str, signals: dict) -> dict | None:
     """Do not route unresolved history, negative emotions, risks or policy queries."""
     if signals["risk_level_rule"] != "low" or signals["rule_alerts"]:
         return None
+    if signals.get("request_plan", {}).get("requires_review"):
+        return None
     if signals.get("valence", 0) != 0:
         return None
     prior_messages = [

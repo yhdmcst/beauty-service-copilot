@@ -22,6 +22,10 @@ from src.agents.knowledge_agent import KnowledgeAgent
 from src.knowledge.service_guidance import NEXT_ACTION, REPLIES, review_guidance, service_focus
 from src.optimization.evidence_routing import evidence_draft
 from src.knowledge.communication_brief import communication_brief
+from src.utils.service_requests import request_plan
+from src.knowledge.service_state import build_service_state
+from src.knowledge.response_plan import response_plan
+from src.knowledge.retrieval_scope import retrieval_scope
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +90,7 @@ class AssistanceDraft(BaseModel):
 
 class AssistAgent:
     """Generate an auditable draft; never performs refunds, shipments or promises."""
-    prompt_version = "compact-v9-item-issues-2"
+    prompt_version = "compact-v13-service-continuity-1"
 
     def __init__(
         self, model: QwenWrapper | None = None,
@@ -183,6 +187,11 @@ class AssistAgent:
     def inspect(self, context: dict, message: str, session_id: str, analysis_id: str) -> dict:
         """Calculate independent safety signals without contacting a model."""
         intent = self.intent_agent.classify(message)
+        service_state = build_service_state(context, message, session_id)
+        inherited = service_state.get("inherited_issue")
+        if inherited and intent["intent_name"] == "general_consultation":
+            intent = {**intent, "intent_name": inherited["intent"], "confidence": .70,
+                      "classification_basis": "single_open_buyer_reported_issue"}
         messages = context.get("service_history", {}).get("messages", []) + context.get("messages", [])
         past_buyers = [row for row in messages if row.get("角色") == "买家"
                        and row.get("message_id") != context.get("analysis_point")
@@ -199,6 +208,14 @@ class AssistAgent:
         emotion = self.emotion_agent.analyze(message, history_emotions=emotion_history)
         alerts = detect_risks(message)
         alerts.extend(self._historical_risk_alerts(context, messages))
+        if context.get("analysis_mode") == "snapshot":
+            for row in context.get("runtime_inputs", [])[-12:]:
+                if row.get("session_id") != session_id or row.get("analysis_point") != context.get("analysis_point"):
+                    continue
+                for alert in detect_risks(row.get("message_text", "")):
+                    alerts.append({**alert, "name": "本地连续输入风险待复核：" + alert["name"],
+                                   "source_message_ids": [row.get("message_id", "")],
+                                   "scope": "local_snapshot_input_not_historical_fact"})
         service_history = context.get("service_history", {})
         contacts = service_history.get("contacts_7d", [])
         refunds = service_history.get("refund_records_30d", [])
@@ -265,8 +282,13 @@ class AssistAgent:
                 "refund_completion_count": None,
             },
             "service_focus": self._service_focus(message, intent["intent_name"]),
+            "request_plan": request_plan(message),
+            "service_state": service_state,
         }
+        if inherited and signals["service_focus"]["category"] == "general_service":
+            signals["service_focus"] = self._service_focus(inherited["basis"]["quote"], intent["intent_name"])
         signals["communication_brief"] = communication_brief(context, message, signals)
+        signals["response_plan"] = response_plan(context, message, signals)
         return signals
 
     @staticmethod
@@ -334,10 +356,12 @@ class AssistAgent:
                 })
         return alerts
 
-    def retrieve_knowledge(self, message: str, intent: str) -> dict:
+    def retrieve_knowledge(self, message: str, intent: str, context: dict | None = None) -> dict:
         """Optional retrieval happens only after risk tasks have been persisted."""
         try:
-            result = self._get_knowledge_agent().search(message, intent)
+            knowledge_agent = self._get_knowledge_agent()
+            result = (knowledge_agent.search(message, intent, purpose="assistance", context=context)
+                      if isinstance(knowledge_agent, KnowledgeAgent) else knowledge_agent.search(message, intent))
         except Exception as error:
             logger.warning("Knowledge retrieval unavailable: %s", type(error).__name__)
             result = {"retrieved_docs": [], "confidence": 0.0,
@@ -348,9 +372,12 @@ class AssistAgent:
         return {
             "reason": result["reason"], "confidence": result["confidence"],
             "can_auto_reply": bool(supported),
+            "can_use_for_assistance": bool(result.get("can_use_for_assistance")),
+            "retrieval_query": result.get("retrieval_query", message),
             "retrieved_docs": [{
                 "id": doc.get("id", ""), "title": doc.get("title", ""),
                 "source": doc.get("source", ""), "verified": doc.get("verified") is True,
+                "knowledge_type": doc.get("knowledge_type", "unclassified"),
                 "approved_product_claim": doc.get("approved_product_claim") is True,
             } for doc in result["retrieved_docs"][:5]],
             "verified_context": "\n".join(
@@ -358,6 +385,15 @@ class AssistAgent:
                 for doc in [item for item in result["retrieved_docs"]
                             if item.get("verified") is True and item.get("id") in supported_ids][:3]
             ) if supported else "",
+            "procedure_context": "\n".join(
+                f"[{doc['id']}] {doc.get('content', '')[:400]}"
+                for doc in result["retrieved_docs"][:5]
+                if doc.get("verified") is True and doc.get("review_status") == "approved"
+                and doc.get("knowledge_type") == "service_procedure"
+                and doc.get("usage_scope") == "human_assistance_only"
+                and intent in doc.get("applicable_intents", [])
+                and str(doc.get("id")) in result.get("procedure_document_ids", [])
+            ),
         }
 
     @staticmethod
@@ -400,6 +436,21 @@ class AssistAgent:
             "context": compact,
             "service_focus": signals.get("service_focus", {}),
         }
+        plan = signals.get("request_plan", {})
+        state = signals.get("service_state", {})
+        if state.get("issues") or state.get("review_reasons") or state.get("transitions") or state.get("inherited_issue") or any(
+            item["status"] == "buyer_reported_resolved" for item in state.get("issues", [])
+        ):
+            payload["service_state"] = {"issues": state.get("issues", []),
+                                        "review_reasons": state.get("review_reasons", []),
+                                        "inherited_issue": state.get("inherited_issue"),
+                                        "scope": state["scope"]}
+        if plan.get("requires_review"):
+            payload["request_plan"] = {
+                "items": [{key: item[key] for key in ("label", "status", "order_scope", "quote")}
+                          for item in plan.get("items", [])],
+                "review_reasons": plan["review_reasons"],
+            }
         # Backend already assembled the trajectory; preserve buyer reports and use
         # structured records, not prior staff promises, for current business status.
         for row in compact["messages"]:
@@ -408,7 +459,13 @@ class AssistAgent:
         knowledge = signals["knowledge"]
         if knowledge["verified_context"]:
             payload["approved_knowledge"] = knowledge["verified_context"]
+        if knowledge.get("procedure_context"):
+            payload["reviewed_procedures"] = knowledge["procedure_context"]
         brief = signals.get("communication_brief", {})
+        reply_plan = signals.get("response_plan", {})
+        if reply_plan.get("known_information") or reply_plan.get("followup_candidates") or reply_plan.get("staff_checks"):
+            payload["reply_plan"] = {key: reply_plan[key] for key in
+                                     ("known_information", "staff_next_action", "followup_candidates", "staff_checks", "information_conflicts")}
         if brief.get("needs") or brief.get("stated_preferences"):
             payload["communication"] = {
                 "strategy": brief["strategy"],
@@ -429,6 +486,11 @@ class AssistAgent:
             "回应具体困扰，不只感谢。不得写我们正在核实、已登记/受理/退款/补发/安排或保证时效。"
             "无approved_knowledge不答成分/疗效/政策，不猜尾款窗口，不作诊断或产品因果判断。"
             "communication仅为买家自述；复用已给信息，不据肤质编产品推荐。"
+            "request_plan为候选诉求：暂缓/历史不办理，条件未满足不当当前动作；"
+            "规则咨询不是办理申请。不同订单分开核对，勿猜订单对应关系；多诉求逐项回应。"
+            "reviewed_procedures仅指导客服核查步骤，不能证明订单状态、政策资格或已执行操作。"
+            "reply_plan为起草计划；内部事项由客服查，追问先核缺失，一次最多一个关键问题。"
+            "i仅填订单/工单证据ID，不填流程ID；多轮状态中买家称已解决不等于后台确认。"
         )
 
     def assist(
@@ -438,7 +500,10 @@ class AssistAgent:
         """Return schema-checked assistance with a non-overridable risk floor."""
         analysis_id = analysis_id or str(uuid.uuid4())
         signals = signals or self.inspect(context, message, session_id, analysis_id)
-        signals = {**signals, "service_focus": self._service_focus(message, signals["intent"])}
+        inherited = signals.get("service_state", {}).get("inherited_issue")
+        focus_text = inherited["basis"]["quote"] if inherited else message
+        signals = {**signals, "service_focus": self._service_focus(focus_text, signals["intent"])}
+        signals["response_plan"] = response_plan(context, message, signals)
         if signals.get("urgent_safety_only"):
             result = self._fallback(context, message, signals)
             result.update(
@@ -481,7 +546,8 @@ class AssistAgent:
                         "final_claim_checks": checks, "final_validation_flags": [],
                         "quality_adjustments": [], "draft_before_validation": None,
                     }
-        signals = {**signals, "knowledge": self.retrieve_knowledge(message, signals["intent"])}
+        signals = {**signals, "knowledge": self.retrieve_knowledge(message, signals["intent"],
+            retrieval_scope(context, signals["service_focus"]["category"]))}
         allowed_ids = {item["id"] for item in context["evidence"] if item["id"]}
         model_context = ContestDataStore.model_context(context)
         model = self._get_model_safe()
@@ -490,6 +556,7 @@ class AssistAgent:
             getattr(model, "model", "unavailable"), signals["risk_level_rule"],
             signals["risk_triggers"], signals["emotion_trend"], signals["knowledge"],
             signals["service_focus"],
+            signals.get("service_state", {}), signals.get("response_plan", {}),
             {"provider": getattr(model, "provider", "unavailable"),
              "endpoint": str(getattr(getattr(model, "client", None), "base_url", "")),
              "thinking": getattr(model, "thinking", False),
@@ -525,11 +592,22 @@ class AssistAgent:
                 signals = {
                     **signals, "intent": model_intent,
                     "intent_basis": "model_with_rule_safety_floor",
-                    "service_focus": self._service_focus(message, model_intent),
+                    "service_focus": self._service_focus(focus_text, model_intent),
                 }
                 intent_source = "model"
             elif signals["intent_confidence"] < 0.90:
                 intent_source = "rule_fallback"
+            signals["response_plan"] = response_plan(context, message, signals)
+            if signals["intent"] != rule_intent:
+                old_knowledge = signals["knowledge"]
+                signals["knowledge"] = self.retrieve_knowledge(message, signals["intent"],
+                    retrieval_scope(context, signals["service_focus"]["category"]))
+                # Generation used the old scope; do not retain claims grounded
+                # in documents that are no longer eligible. No second model call.
+                if old_knowledge.get("verified_context") or old_knowledge.get("procedure_context"):
+                    parsed["suggested_reply"] = self._safe_reply(message, signals)
+                    parsed["next_action"] = NEXT_ACTION[signals["service_focus"]["category"]]
+                    parsed["summary"] = self._safe_summary(message, signals)
             evidence_ids = [
                 str(item) for item in parsed.get("evidence_ids", [])
                 if str(item) in allowed_ids
@@ -540,6 +618,12 @@ class AssistAgent:
             risk = max((risk, RISK_NAMES[signals["risk_level_rule"]]),
                        key=lambda value: {"低": 0, "中": 1, "高": 2, "紧急": 3}[value])
             flags, checks, adjustments = [], [], []
+            if signals["intent"] != rule_intent and (old_knowledge.get("verified_context") or old_knowledge.get("procedure_context")):
+                flags.append("knowledge_scope_changed_after_generation")
+                for field in ("summary", "suggested_reply", "next_action"):
+                    if original_draft[field] != parsed[field]:
+                        adjustments.append({"field": field, "reasons": ["knowledge_scope_changed_after_generation"],
+                                            "before": original_draft[field], "after": parsed[field]})
             category = signals["service_focus"]["category"]
             check_options = {"source_text": message, "analysis_at": context.get("analysis_at", "")}
             for field in ("summary", "suggested_reply", "next_action"):

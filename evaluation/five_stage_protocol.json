@@ -1,0 +1,26 @@
+{
+  "protocol_version": "five-stage-20261015-1",
+  "scope": "工程定义的冻结回归协议，已参与开发，不是独立人工金标准",
+  "cases": [
+    {"id":"pause-1","message":"暂时不退款，先查询物流","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"pause-2","message":"退款暂且不用了，发货了没","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"conditional-1","message":"先看运单，如果一直找不到再退钱","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"conditional-2","message":"先查物流如果找不到再退款","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"money-1","message":"钱还没回来，订单号刚才给过了","intent":"refund_request","focus":"refund_status_or_amount"},
+    {"id":"money-2","message":"之前申请退款一直没到账","intent":"refund_request","focus":"refund_status_or_amount"},
+    {"id":"reverse-1","message":"上次说不用退款，现在还是给我退了吧","intent":"refund_request","focus":"refund_status_or_amount"},
+    {"id":"orders-1","message":"这单退款，另一单改地址","intent":"refund_request","focus":"refund_status_or_amount"},
+    {"id":"orders-2","message":"这单改地址另一单退款","intent":"order_query","focus":"address_change"},
+    {"id":"absence-1","message":"没有赠品","intent":"activity_inquiry","focus":"promotion_or_gift"},
+    {"id":"absence-2","message":"退款没到账","intent":"refund_request","focus":"refund_status_or_amount"},
+    {"id":"absence-3","message":"没有发货","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"negative-1","message":"不怀疑假货，只是色号发错了","intent":"quality_issue","focus":"sku_mismatch"},
+    {"id":"negative-2","message":"不用退货退款，只核对发货时间","intent":"logistics_query","focus":"shipment_query"},
+    {"id":"risk-1","message":"先别退款，但用了后全脸发红","intent":"allergy_reaction","focus":"adverse_reaction_report"},
+    {"id":"risk-2","message":"不用查物流，我用后脸肿了","intent":"allergy_reaction","focus":"adverse_reaction_report"},
+    {"id":"damage-1","message":"瓶盖碎了，帮查怎么处理","intent":"quality_issue","focus":"product_usability_or_damage"},
+    {"id":"missing-1","message":"买两瓶只收到一瓶，帮核对","intent":"quality_issue","focus":"missing_items"},
+    {"id":"refund-1","message":"退货仓库收到后售后关闭了，钱退不出来","intent":"refund_request","focus":"return_refund"},
+    {"id":"gift-1","message":"不查赠品，只问发货了没","intent":"logistics_query","focus":"shipment_query"}
+  ]
+}

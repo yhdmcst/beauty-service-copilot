@@ -1,7 +1,7 @@
-# 空白标注模板
+# 场景标注模板
 
-20条开发样本和30条待标注样本由上传版字段清理数据生成，按场景家族划分。模板没有人工标签，不代表原本机的30条人工判断。
+`annotation_pack.json`包含20条开发样本与30条待标注样本，按场景家族划分，初始标签为空。
 
-个人标签、来源说明和效率记录保存到本机 `data/runtime/evaluation.sqlite`，不随GitHub源码发布。运行前后请保留本人真实记录，不将模型或规则候选冒充人工盲标。
+评估中心将人工标签、模型预测与规则候选分别记录。实际标注和效率计时保存在本机 `data/runtime/evaluation.sqlite`，不随参赛源码分发。
 
-模板存在时 `evaluation/prepare_holdout.py`会拒绝覆写。需要新实验请另存输入和评估结果。
+`evaluation/prepare_holdout.py`在模板已存在时拒绝覆盖，新实验使用独立文件。评估方法见 [评估说明](../../docs/EVALUATION.md)。

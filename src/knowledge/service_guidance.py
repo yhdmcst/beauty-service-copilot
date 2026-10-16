@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 
 from src.risk.beauty_risk_rules import detect_risks, is_active_keyword
-from src.utils.service_requests import current_request_text
+from src.utils.service_requests import primary_request_text, request_plan
 from src.utils.service_issue_cues import reported_item_issues
 from src.knowledge.provided_information import supplied_information
 
@@ -118,7 +118,7 @@ def service_focus(message: str, intent: str) -> dict:
         is_active_keyword(message, term)
         for term in ("脸肿", "肿了", "接触性皮炎")
     )
-    message = current_request_text(message)
+    message = primary_request_text(message)
     item_issues = reported_item_issues(message)
     damage = any(issue["category"] == "product_usability_or_damage" for issue in item_issues)
     missing = any(issue["category"] == "missing_items" for issue in item_issues)
@@ -135,7 +135,9 @@ def service_focus(message: str, intent: str) -> dict:
         category = "address_change"
     elif "尾款" in message or ("预售" in message and any(term in message for term in ("付", "定金"))):
         category = "pre_sale_payment"
-    elif any(term in message for term in ("退款", "退钱", "到账", "退不出", "少款")) or re.search(r"退的(?:钱|款)", message):
+    elif any(term in message for term in ("退款", "退钱", "到账", "退不出", "少款")) or re.search(
+        r"退的(?:钱|款)|钱.{0,4}没回来|(?:给我|帮我|还是)退了", message
+    ):
         category = "refund_status_or_amount"
     elif damage:
         category = "product_usability_or_damage"
@@ -163,9 +165,25 @@ def cited_order(context: dict, ids: list[str]) -> dict | None:
     return orders[0] if len(orders) == 1 else None
 
 
-def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> dict:
+def _review_guidance(draft: dict, context: dict, message: str, focus: dict) -> dict:
     """Return bounded quality issues with optional context-grounded corrections."""
     category = focus.get("category", "general_service")
+    plan = request_plan(message)
+    active = [item for item in plan["items"] if item["status"] in {"active", "inquiry"}]
+    if category != "adverse_reaction_report" and len({item["order_scope"] for item in active}) > 1:
+        # No reliable mapping from demonstratives to supplied order records.
+        # Never let a single cited order silently cover two different requests.
+        requests = list(dict.fromkeys(f"{item['order_scope']}：{item['label']}" for item in active))
+        description = "；".join(requests)
+        corrected = {
+            "summary": f"买家提出不同订单的事项：{description}，对应订单待核。",
+            "suggested_reply": f"您提到的事项需要分开处理：{description}。先对照已有订单记录确认对应关系，只补充尚不明确的信息，再分别核查可办理路径。",
+            "next_action": "客服对照已有订单确认各诉求的对应关系，再逐项核查处理路径",
+            "missing_info": list(dict.fromkeys(draft.get("missing_info", []) + ["不同订单指代与具体订单的对应关系"]))[:5],
+        }
+        return {"issues": [{"field": field, "code": "multiple_order_binding_unconfirmed"}
+                           for field, value in corrected.items() if draft.get(field) != value],
+                "changes": {field: value for field, value in corrected.items() if draft.get(field) != value}}
     reply, action = draft["suggested_reply"], draft["next_action"]
     issues, changes = [], {}
     requirements = ACTION_REQUIREMENTS.get(category, ())
@@ -291,3 +309,54 @@ def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> di
         if at and shipped <= at:
             changes.setdefault("next_action", NEXT_ACTION["shipment_query"])
     return {"issues": issues, "changes": changes}
+
+
+LOCAL_REPAIRS = {
+    "internal_record_requested_from_buyer": "相关内部业务记录由客服核查，再向您反馈。",
+    "known_order_requested_again": "已有订单信息先沿用，仅补尚不明确的信息。",
+    "known_variant_requested_again": "先对照您已说明的色号和订单规格，确有缺失再补充。",
+    "after_sales_work_shifted_to_buyer": "退货入库、售后关闭原因和退款流水由客服核查。",
+    "batch_explanation_not_verified": "差异原因目前尚不能确定，需要客服核对规格、批次和渠道依据。",
+    "damage_cause_not_verified": "损坏原因尚待核实，由客服对照已有材料和出库记录继续核查。",
+    "tracking_work_shifted_to_buyer": "最新配送轨迹由客服按已有运单核查后反馈。",
+    "reported_defect_not_addressed": "先对照您反馈的商品问题和现有材料，再由客服核查售后路径。",
+}
+
+
+def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> dict:
+    """Repair affected sentences while retaining sound context and empathy.
+
+    Severe safety, multiple-order, and evidence-specific rewrites keep their
+    dedicated path. All repaired text still passes downstream claim verification.
+    """
+    result = _review_guidance(draft, context, message, focus)
+    codes = {issue["code"] for issue in result["issues"] if issue["field"] == "suggested_reply"}
+    if codes == {"current_condition_not_addressed"}:
+        # This is a missing obligation, not proof that every existing sentence
+        # is wrong. Remove the specific misdirected question, keep the rest.
+        retained = [sentence for sentence in re.findall(r"[^。！？；\n]+[。！？；\n]?", draft["suggested_reply"])
+                    if "是否已联系客服" not in sentence]
+        candidate = "".join(retained)
+        if not any(word in candidate for word in ("当前", "状况", "现状", "现在")):
+            candidate += "先沿用您已说明的情况；当前状况若仍不清楚，再确认是否持续或加重，由人工优先跟进。"
+        if candidate and len(candidate) <= 500:
+            result["changes"]["suggested_reply"] = candidate
+        return result
+    if not codes or not codes <= LOCAL_REPAIRS.keys() or "suggested_reply" not in result["changes"]:
+        return result
+    sentences = re.findall(r"[^。！？；\n]+[。！？；\n]?", draft["suggested_reply"])
+    repaired, inserted = [], set()
+    for sentence in sentences:
+        check = _review_guidance({**draft, "suggested_reply": sentence}, context, message, focus)
+        affected = [issue["code"] for issue in check["issues"]
+                    if issue["field"] == "suggested_reply" and issue["code"] in LOCAL_REPAIRS]
+        if not affected:
+            repaired.append(sentence)
+            continue
+        for code in dict.fromkeys(affected):
+            if code not in inserted:
+                repaired.append(LOCAL_REPAIRS[code]); inserted.add(code)
+    candidate = "".join(repaired)
+    if candidate and len(candidate) <= 500:
+        result["changes"]["suggested_reply"] = candidate
+    return result

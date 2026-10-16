@@ -1,58 +1,65 @@
-# 运行指南
+# 运行与演示指南
 
-## 初次安装
+## 环境准备
 
-Windows运行README中的Python 3.11安装命令，复制 `.env.example`为本机 `.env`。模板默认本地Ollama，不会使用原开发者的密钥。
+使用Python 3.11，按 [首页安装步骤](../README.md)创建虚拟环境，安装 `requirements_runtime.txt`，将 `.env.example`复制为 `.env`。
 
-应用运行只需要 `requirements_runtime.txt`，不需要Docker、Redis、Qdrant、Node或图片模型。模型生成建议另需安装Ollama并拉取 `qwen3:8b`。Windows和Edge为本机验收环境，其他系统的页面与模型性能需要重新验证。
+本地文本生成使用Ollama与 `qwen3:8b`：
 
-## 启动和停止
+```bash
+ollama pull qwen3:8b
+```
 
-双击 `start_demo.cmd`在后台启动，浏览器关闭不停止服务。需要在终端控制启动/停止时使用：
+默认模型地址为 `http://127.0.0.1:11434/v1`。应用以本地JSON、SQLite、词法检索和进程缓存运行，无需Node、Docker或外部数据库。模型权重与Python环境由展示设备单独安装。
+
+## 启动与停止
+
+Windows：
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_demo.py --port 5000
 ```
 
-终端内按Ctrl+C停止此进程，勿为清理端口关闭不属于本项目的服务。健康检查地址为 `/health`，它说明服务配置状态，不代表实时模型探测已经通过。
+macOS / Linux：
 
-模型连通性和预热：
-
-```powershell
-.\.venv\Scripts\python.exe scripts\check_local_model.py
+```bash
+.venv/bin/python scripts/run_demo.py --port 5000
 ```
 
-检查输出的 `gpu_allocation_observed` 和 `gpu_bytes`。新机器默认使用11434；需要独立GPU服务时先安装完整的官方Ollama，再设置 `OLLAMA_GPU_RUNTIME` 指向其目录，用 `scripts/start_local_gpu.ps1` 启动11435并把本机 `.env` 的 `QWEN_API_BASE` 改为 `http://127.0.0.1:11435/v1`。此配置下启动器会检查GPU服务；仓库不包含便携运行时或模型权重。
+访问 `http://127.0.0.1:5000/`。Windows完成安装后也可双击 `start_demo.cmd`，启动器会寻找可用端口。命令行启动的服务按Ctrl+C停止。
 
-## 录制场景
+`/health`显示服务版本与模型配置。实际模型连通性使用 `scripts/check_local_model.py` 或一次建议生成检查。模型不可用时页面显示降级状态。
 
-工作台选 `S00381`，分析时点为 `13694977354478.PNM`。先看附件快照，再切历史回放，生成退款受阻建议。另一个场景 `S00076`选 `92900836378476.PNM`，展示举报风险和人工认领。
+## 演示操作
 
-上传版昵称采用演示编号，订单/工单关联和上述分析点保留。首次运行任务和审核记录为空，不能把新的演示操作说成原人工效率实验。
+| 场景 | 会话 | 分析点 |
+| --- | --- | --- |
+| 退货后退款受阻 | S00381 | 13694977354478.PNM，2026-05-19 15:44:33 |
+| 批次疑虑与举报表达 | S00076 | 92900836378476.PNM，2026-05-08 15:53:44 |
+| 商品少件 | S00006 | 选择少件问题消息 |
 
-## 空白标注模板
+1. 选择会话，查看聊天、关联订单和工单。
+2. 在S00381切换附件快照与历史回放，观察更晚工单的排除。
+3. 生成辅助建议，展开事项状态、已有资料和下一步。
+4. 编辑草稿，填写审核人及备注，保存采纳或拒绝决定。
+5. 创建或认领跟进任务，设置期限和等待对象，在风险看板查看状态。
 
-`evaluation/holdout_v2/annotation_pack.json`包含20条开发样本和30条待人工标注样本。上传副本依据字段清理后的数据生成，样本标签为空，不是原人工金标准。
+多轮演示可在同一分析点输入“照片已经提供，瓶身漏液，泵头坏了”，生成后再输入“漏液已经解决了，但泵头还是坏的”，查看事项与资料的延续。补充输入用于本地演示，不修改原始聊天。
 
-运行时创建的 `data/runtime/evaluation.sqlite`只属于当前机器。不要将它上传GitHub。导出个人标注和计时时，检查脱敏及授权，默认输出目录已忽略。
+视频路线与旁白见 [演示脚本](../presentation/demo_script.md)。
 
-## 可选页面验收
+## 记录与隔离模式
 
-```powershell
-uv pip install --python .venv\Scripts\python.exe -r requirements_dev.txt
-.\.venv\Scripts\python.exe scripts\run_demo.py --port 5011 --isolated
+首次运行创建 `data/runtime/`，保存本机分析、审核、任务与评估记录。正式提交不包含该目录和 `.env`。
+
+界面验证或彩排可使用内存数据库启动：
+
+```bash
+python scripts/run_demo.py --port 5011 --isolated
 ```
 
-在第二个终端执行：
+此模式停止后不保留操作记录。软件测试使用独立测试数据库，运行方法见 [评估说明](EVALUATION.md)。
 
-```powershell
-.\.venv\Scripts\python.exe scripts\verify_mainline_ui.py --base http://127.0.0.1:5011 --output evaluation/results/my_ui_check
-```
+## 可选实验
 
-此检查使用Windows的本机Edge和隔离内存数据库，不往正式库写假人工记录。需要另用浏览器时调整脚本的 `EDGE`路径；不要随意改用有原始标注的正式服务。
-
-## 可选知识检索
-
-默认知识为模拟草案，缺已审核证据会被门禁拒绝。生产品牌结论需要经业务确认的来源、商品身份及审核标记。
-
-BGE、Qdrant或Redis都不是比赛原型的运行前提。如自行接入，安装 `requirements_ml.txt`并配置对应服务，重新验证权限、维度、持久化及性能。不要把本机Flask服务直接暴露公网。
+`requirements_ml.txt`和 `requirements_research.txt`用于语义检索、CPU分类等扩展实验，默认工作台不启用。知识示例演示资料用途与适用范围，品牌后台与真实售后写操作不属于运行条件。

@@ -28,6 +28,8 @@ function showAlerts(alerts) {
     detail.textContent = item.action;
     const session = document.createElement("small");
     session.textContent = `会话 ${item.session_id} · 负责人 ${item.owner || "未分配"}`;
+    if (item.due_at) session.textContent += ` · 下次跟进 ${new Date(item.due_at).toLocaleString("zh-CN")}${item.overdue ? "（已逾期）" : ""}`;
+    if (item.waiting_on) session.textContent += ` · 等待 ${item.waiting_on}`;
     const link = document.createElement("a");
     link.className = "alert-link";
     link.href = `/workbench?session=${encodeURIComponent(item.session_id)}`;

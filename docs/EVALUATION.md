@@ -1,70 +1,72 @@
-# 评估与复现
+# 评估方法与结果
 
-更新：2026-10-15。当前版本 `compact-v9-item-issues-2`。以下软件检查、原环境模型测量与人工记录分开报告。
+版本：`compact-v13-service-continuity-1`。测量日期：2026-10-15。
 
-## 软件测试
+## 软件回归
 
-`tests/`使用模型替身和隔离SQLite，检查时点、身份、结构、声明、情绪规则、风险、缓存、队列和人工操作，不需要云端模型。
+`tests/`覆盖数据时点、身份确认、诉求与多轮状态、资料复用、知识范围、回复校验、风险任务、缓存及人工操作。测试使用隔离数据库和模型替身，无需实际模型生成。
 
-```powershell
-uv pip install --python .venv\Scripts\python.exe -r requirements_dev.txt
-uv pip install --python .venv\Scripts\python.exe -r requirements_research.txt
-.\.venv\Scripts\python.exe -B -X utf8 -m pytest -q -p no:cacheprovider tests
+结果：**441项通过，3项跳过**。跳过项为未安装可选研究依赖的检查。记录见 [软件测试摘要](../evaluation/reference/software_tests.json)。
+
+安装运行依赖后执行：
+
+```bash
+python -B -m pytest -q -p no:cacheprovider tests
 ```
 
-当前全套348项通过，包含可选CPU实库检查。不装研究依赖时3项会明确跳过。测试数量不是模型正确率；上传副本与主项目的执行记录分别保存，不凭源码同步就假定验收通过。
+Windows使用 `.venv\Scripts\python.exe`，macOS / Linux使用 `.venv/bin/python`。开发工具在 `requirements_dev.txt`，可选CPU研究依赖在 `requirements_research.txt`。
 
-## 当前原环境模型测量
+## 固定工程协议
 
-聚合摘要：[mainline_accuracy_update_20261015.json](../evaluation/reference/mainline_accuracy_update_20261015.json)。
+[evaluation/five_stage_protocol.json](../evaluation/five_stage_protocol.json)包含20条条件、暂缓、反悔、多订单与风险表达。分别比较意图和处理焦点，记录逐条结果。
 
-| 检查 | 当前结果 | 范围 |
+| 模式 | 意图匹配 | 处理焦点匹配 |
 | --- | --- | --- |
-| 固定12例回复 | 11次模型、1次证据路径，零不可用降级 | 各取首遍，原稿10条16处修正保留 |
-| 最终声明/服务检查 | 均0例剩余检出 | 不等于独立人工正确率 |
-| 输入 / 输出 / 总Token | 6783 / 1573 / 8356 | 原开发环境顺序运行 |
-| 系统中位 / 最大耗时 | 2834.98 / 3685.6毫秒 | 不作为生产并发SLA |
-| 原30条最终意图 | 27/30，Macro-F1约0.6176 | 已见样本事后回归 |
-| 最终基础情绪 | 同映射21/30，Macro-F1约0.6511 | 本轮未提高 |
-| 最终风险 | 27/30 | 三条不适安全下限高于旧中级标签 |
+| 规则模式 | 20/20 | 20/20 |
+| 完整模型工作流 | 20/20 | 20/20 |
 
-原规则意图26/30、Macro-F1约0.6038，混合情绪11/30，与最终工作流分别报告。原人工高/紧急正例为0，召回不可计算。最终基础情绪读取 `emotion_basic_display`，原场景标签采用明确映射：`allergy_anxiety→fearful`、`price_dissatisfaction→angry`、`effect_disappointment→sad`、`satisfaction→happy`。不能拿混合标签匹配率直接与基础情绪比较。
+协议预期由工程定义，样本参与了开发，结果用于功能回归。完整模型工作流包含超时后的规则降级，不能把上述匹配数量等同于模型生成成功数。
 
-样本已参与开发，原标签未改。新20条商品表达和8条缺商品表达是工程定义预期，不是新人工金标准。详见 [当前判断优化](MAINLINE_ACCURACY_20261014.md)。
+## 本地模型运行
 
-## 历史结果
+环境：Ollama、Qwen3:8b，单次25秒超时、最多1次尝试。完整20条顺序运行，结果见 [逐条模型记录](../evaluation/reference/five_stage_model.json) 与 [规则记录](../evaluation/reference/five_stage_rules.json)。
 
-| 记录 | 当时结果 | 位置 |
-| --- | --- | --- |
-| V6/V7协议交替 | 两版各22次，Token16368→15364，减少6.13% | `evaluation/reference/local_measurement_summary.json` |
-| V7完整12例 | Token8980→7682，减少14.45%，包含1条证据路径 | `docs/ACCURACY_COST_UPGRADE.md`；不能与纯模型路径混算 |
-| V8-3 | 12例8342 Token、中位2.94秒；当时269项软件测试 | `evaluation/reference/communication_update_20261013_v3.json` |
-| 固定提示CPU/5060 | 各6次，中位17.18→3.82秒 | 同上所含设备对照 |
-| V8-4 | 303项测试、12例8357 Token | `evaluation/reference/open_source_update_20261014.json` |
-| V8-5 | 320项测试、12例8357 Token | `evaluation/reference/service_memory_update_20261014.json` |
-| 离线预审分流 | Token15326→11788，减少23.08% | `evaluation/reference/automated_precheck_20261013.json` |
-
-V9与V8-5仅差1 Token，不当显著降本。V8-3的28条工程情绪协议中，规则基础/场景均28/28，实际模型基础情绪25/28（开发10/12、验证15/16），不是人工准确率。旧32条工程表达基础31/32、场景30/32，礼貌致谢改中性后各少1条，旧预期保留。
-
-历史研究、失败和中间结果不改写。离线预审节约不计入接待成本；设备和提示同时改变的完整复测不作单因素归因。
-
-## 人工记录与上传副本
-
-原项目的30条人工标注、42条历史和效率记录仅在本机保存。用户确认30条均由人工判断，误点候选按钮不作为采用证据。本上传副本不提供原个人数据库，20条开发/30条待标注模板是空的，不能充当原金标准。
-
-本人12条回复复核已完成：8条原V9可见草稿可用、4条改后认可、0待确认，见 [复核汇总](REPLY_REVIEW_SUMMARY_20261015.md)。本人已看自动检查意见，不是独立盲测；4条认可稿不是原模型输出或已部署生成补丁。旧测量快照不改写。H的效率声明保留，但缺完整20条任务级计时，不能报告真人提效比例。自动预审只能筛查和排序，不填写人工通过。
-
-清理副本改变了昵称和无关字段，不与原输入逐字相同；需要在新机器另存第一遍输出、代码版本、失败及用量，不能直接宣称复现原环境结果。
-
-## 可用工具
-
-| 用途 | 入口 |
+| 指标 | 结果 |
 | --- | --- |
-| 保留首遍回复与修正 | `evaluation/capture_precheck_cases.py` |
-| 固定请求与协议对照 | `evaluation/benchmark_assistance.py`、`benchmark_paired_protocols.py` |
-| 实际人工标签事后比较 | `evaluation/evaluate_frozen_assistance.py` |
-| 规则/工程表达检查 | `evaluation/evaluate_emotion_protocol.py`、`evaluate_service_issue_protocol.py` |
-| CPU分类与检索实验 | `evaluation/evaluate_lightweight_classifier.py`、`evaluate_knowledge_reranking.py` |
-| 只读预审与开源工具导出 | `evaluation/review_saved_replies.py` |
+| 成功生成 | 19/20 |
+| 超时降级 | 1/20，案例gift-1 |
+| 全请求中位耗时 | 10.132秒 |
+| 成功生成中位耗时 | 10.011秒 |
+| 最大耗时 | 25.012秒 |
+| 已报告Token | 19,378；超时请求用量未知 |
+| 最终草稿自动检查 | 19条完成，0条被标记 |
 
-有些入口需要自己的已保存回复或实际标注数据库。先准备依赖与输入，不因脚本存在就当作实验完成；不要用空白模板补造原人工标签。
+超时案例“不查赠品，只问发货了没”单独复测成功，耗时15.919秒、1,140 Token，意图与焦点各1/1。记录见 [单条复测](../evaluation/reference/timeout_case_retry.json)。原完整回归仍保留1条超时，单条复测单独报告。
+
+自动检查覆盖既定结构、声明与服务规则，无法替代人工语义评价。上述时延为本机固定案例结果，未测生产并发或实际客服任务用时。
+
+## 复现与断点续跑
+
+在已激活的Python环境中执行：
+
+```bash
+python evaluation/evaluate_five_stage.py --output evaluation/results/rules.json
+python evaluation/evaluate_five_stage.py --model --output evaluation/results/model.json
+python evaluation/evaluate_five_stage.py --model --output evaluation/results/model.json --resume
+```
+
+模型测量时在本机 `.env` 配置 `QWEN_TIMEOUT_SECONDS=25`、`QWEN_MAX_ATTEMPTS=1`。每条结果完成后原子保存检查点，续跑校验协议、源码、版本、模型及配置摘要，已完成案例不重复请求。
+
+源码摘要覆盖 `src/` Python文件及场景知识JSON，不含前端和说明文档。评测修改输出文件另存，保留失败及中间结果。结果目录在运行时创建，默认不打包。
+
+## 成本设计与对照
+
+作品采用紧凑输出、精确缓存和有限证据路径，记录实际返回的Token用量。没有计价提供方时不推算费用；超时用量未知时分别报告。
+
+历史固定协议对照记录见 [成本基线](../evaluation/reference/cost_protocol_baseline.json)：2026-10-09，11个共同案例，两版各22次交替生成，合计Token由16,368降至15,364，减少6.13%。该记录来自较早版本与原始输入，用于说明协议优化方法，不能与当前20条结果直接比较。
+
+## 人工评估入口
+
+评估中心支持记录意图、情绪、风险标签及任务效率。随附20条开发样本和30条待标注样本模板，初始标签为空。新增标注和计时保存到本机数据库。
+
+工程预期、模型预测和人工标注分别保留来源。当前结果支持作品机制与回归表现，不报告独立人工准确率、真实提效或满意度比例。

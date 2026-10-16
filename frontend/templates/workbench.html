@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>美妆客服共情副驾</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/workbench.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
   <script defer src="{{ url_for('static', filename='js/workbench.js') }}"></script>
   <script defer src="{{ url_for('static', filename='vendor/socket.io.min.js') }}"></script>
 </head>
 <body>
-  <header class="wb-topbar">
-    <div class="wb-brand"><span class="wb-brand-mark">◆</span><span>美妆客服共情副驾</span></div>
-    <div class="wb-status"><a href="/evaluation">人工评估</a><a href="/dashboard">风险跟踪</a><span class="status-dot"></span>演示数据 · MOCK</div>
-  </header>
+  {% include '_navigation.html' %}
   <main class="wb-layout">
     <aside class="session-pane">
       <div class="pane-head"><div><h1>接待列表</h1><p id="session-count">虚构会话</p></div><button id="refresh-sessions" class="icon-btn" title="刷新会话列表" aria-label="刷新会话列表">↻</button></div>
@@ -35,7 +33,7 @@
       <details class="timeline-wrap"><summary>服务时间线</summary><div id="timeline"></div></details>
       <div class="composer">
         <label for="message-input">客户消息</label>
-        <textarea id="message-input" maxlength="2000" placeholder="输入客户最新消息，或直接使用当前会话最后一条买家消息"></textarea>
+        <textarea id="message-input" maxlength="2000" placeholder="输入客户最新消息，或直接使用当前会话最后一条买家消息" disabled></textarea>
         <div class="composer-actions"><span id="request-status" role="status"></span><button id="assist-btn" class="primary-btn" disabled>生成辅助建议</button></div>
       </div>
     </section>
@@ -47,6 +45,13 @@
         <p id="summary" class="summary">选择会话后生成</p>
       </section>
       <section class="assist-section"><div class="section-label">待核实事项</div><ul id="missing-info"></ul></section>
+      <section class="assist-section">
+        <div class="section-label">诉求与处理顺序</div>
+        <ul id="request-plan"></ul>
+        <p id="request-plan-review" class="muted">尚未分析</p>
+        <details><summary>多轮问题状态与变化</summary><ul id="service-state"></ul></details>
+        <details><summary>下一步与必要追问</summary><ul id="reply-plan"></ul></details>
+      </section>
       <section class="assist-section">
         <div class="section-label">沟通重点</div>
         <p id="communication-strategy" class="summary">尚未分析</p>
@@ -103,7 +108,7 @@
       <section class="assist-section task-section">
         <div class="section-label">跟进状态</div>
         <div id="tasks" class="task-list"><p class="muted">暂无任务</p></div>
-        <details class="review-history"><summary>审核记录</summary><div id="reviews"></div></details>
+        <details class="review-history"><summary>审核记录</summary><div id="reviews"></div><p id="feedback-summary" class="muted"></p></details>
       </section>
     </aside>
   </main>
@@ -112,6 +117,8 @@
       <h2 id="task-dialog-title">处理任务</h2>
       <label for="task-owner">负责人</label><input id="task-owner" maxlength="40" placeholder="姓名或工号" required>
       <label for="task-note">处置备注</label><textarea id="task-note" maxlength="500"></textarea>
+      <label for="task-due">下次跟进时间（本地时间，可选）</label><input id="task-due" type="datetime-local">
+      <label for="task-waiting">当前等待对象（可选）</label><input id="task-waiting" maxlength="80" placeholder="例如：仓库核查、承运方反馈">
       <p id="task-error" role="alert"></p>
       <div class="review-actions"><button id="task-submit" class="primary-btn" type="submit">确认</button>
         <button id="task-cancel" class="secondary-btn" type="button">取消</button></div>

@@ -1,0 +1,11 @@
+{
+  "scope": "冻结协议中超时案例的单独复测；原失败保留，不替换原结果",
+  "cases": [
+    {
+      "id": "gift-1",
+      "message": "不查赠品，只问发货了没",
+      "intent": "logistics_query",
+      "focus": "shipment_query"
+    }
+  ]
+}

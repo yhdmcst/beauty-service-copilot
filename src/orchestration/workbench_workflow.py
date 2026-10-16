@@ -72,6 +72,22 @@ class WorkbenchWorkflow:
         identity = self.cases.consumer_identity(state["session_id"])
         context = self.data.with_service_history(context, identity)
         message = state["message"] or context["latest_buyer_message"]
+        if state["mode"] == "snapshot":
+            # User-entered demo turns are stored separately from contest history.
+            # Only the same selected point can reuse them; replay never does.
+            prior = self.cases.recent_analyses(state["session_id"], limit=50)
+            context["runtime_inputs"] = [
+                {"message_id": row["analysis_id"], "message_text": row["input_message"],
+                 "角色": "买家", "session_id": state["session_id"],
+                 "发送时间": row["created_at"], "analysis_point": row["analysis_point"]}
+                for row in reversed(prior)
+                if row.get("analysis_mode") == "snapshot" and row.get("input_message")
+                and row.get("input_is_override") and row.get("analysis_point") == context["analysis_point"]
+            ]
+            # Repeated submission of the current turn is a retry, not a new
+            # historical turn. Preserve earlier distinct turns (including A-B-A).
+            while context["runtime_inputs"] and context["runtime_inputs"][-1]["message_text"] == message:
+                context["runtime_inputs"].pop()
         return {"context": context, "message": message,
                 "trace": self._trace(state, "evidence", started)}
 
@@ -125,6 +141,8 @@ class WorkbenchWorkflow:
             basis_warning=state["context"]["basis_warning"],
             created_at=now(),
             service_history=state["context"]["service_history"],
+            input_message=state["message"],
+            input_is_override=state["message"] != state["context"]["latest_buyer_message"],
         )
         return {"result": result, "trace": self._trace(state, "verify", started)}
 

@@ -8,7 +8,7 @@ import uuid
 from pathlib import Path
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request
+from flask import Flask, jsonify, render_template, request
 from werkzeug.exceptions import HTTPException
 
 from src.agents.emotion_agent import EmotionAgent
@@ -145,7 +145,7 @@ def create_app(
 
     @app.get("/")
     def index() -> object:
-        return redirect("/workbench")
+        return render_template("home.html")
 
     @app.get("/dashboard")
     def dashboard() -> str:
@@ -471,6 +471,7 @@ def create_app(
                 task_id, str(payload.get("status", "")), str(payload.get("note", "")),
                 owner=str(payload.get("owner", "")),
                 actor=str(payload.get("actor", "客服")),
+                due_at=payload.get("due_at"), waiting_on=payload.get("waiting_on"),
             )
         except KeyError:
             return jsonify(error="Task not found"), 404
@@ -505,6 +506,10 @@ def create_app(
         analyses = app.extensions["case_store"].recent_analyses(session_id)
         return jsonify(analyses=analyses,
                        feedback=app.extensions["case_store"].feedback(session_id)), 200
+
+    @app.get("/api/feedback/summary")
+    def feedback_summary() -> tuple:
+        return jsonify(app.extensions["case_store"].feedback_summary()), 200
 
     @app.get("/api/dashboard")
     def dashboard_data() -> tuple:

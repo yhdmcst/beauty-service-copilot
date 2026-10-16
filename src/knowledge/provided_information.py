@@ -24,10 +24,12 @@ def supplied_information(context: dict, message: str, session_id: str) -> list[d
     raw_messages = list(context.get("messages", []))
     prior = [row for row in raw_messages if not row.get("session_id") or row["session_id"] == own]
     if history.get("identity_basis", "unconfirmed") != "unconfirmed":
-        prior += history.get("messages", [])
+        confirmed = history.get("confirmed_session_ids")
+        prior += [row for row in history.get("messages", [])
+                  if confirmed is None or row.get("session_id") in confirmed]
     prior = [row for row in prior if row.get("角色") == "买家"
              and row.get("message_id") != point
-             and (not cutoff or not row.get("发送时间") or row["发送时间"] <= cutoff)]
+             and (not cutoff or row.get("发送时间") and row["发送时间"] <= cutoff)]
     prior.sort(key=lambda row: row.get("发送时间", ""))
     selected = next((row for row in raw_messages
                      if row.get("message_id") == point and row.get("message_text") == message), {})
@@ -35,18 +37,31 @@ def supplied_information(context: dict, message: str, session_id: str) -> list[d
         "message_id": point, "message_text": message, "发送时间": cutoff, "session_id": own,
         "内容类型": selected.get("内容类型", "文本"), "image_available": selected.get("image_available", False),
     }
-    rows = prior[-12:] + [current]
+    runtime = []
+    if context.get("analysis_mode") == "snapshot":
+        runtime = [{**row, "scope": "local_snapshot_input"}
+                   for row in context.get("runtime_inputs", [])
+                   if row.get("session_id") == own and row.get("analysis_point") == point
+                   and row.get("角色") == "买家"][-12:]
+    rows = prior[-12:] + runtime + [current]
     items, seen = [], set()
 
     def add(kind: str, label: str, value: str, status: str, row: dict, quote: str) -> None:
         key = (kind, value)
         if key in seen:
+            if kind == "reported_material":
+                existing = next(item for item in items if (item["kind"], item["value"]) == key)
+                existing["status"] = status
+                existing["basis"] = {"message_id": row.get("message_id", ""),
+                                     "session_id": row.get("session_id", own), "time": row.get("发送时间", ""),
+                                     "quote": quote[:120], "scope": row.get("scope", "cutoff_buyer_message")}
             return
         seen.add(key)
         items.append({
             "kind": kind, "label": label, "value": value, "status": status,
             "basis": {"message_id": row.get("message_id", ""), "session_id": row.get("session_id", own),
-                      "time": row.get("发送时间", ""), "quote": quote[:120]},
+                      "time": row.get("发送时间", ""), "quote": quote[:120],
+                      "scope": row.get("scope", "cutoff_buyer_message")},
         })
 
     for row in rows:
@@ -68,6 +83,13 @@ def supplied_information(context: dict, message: str, session_id: str) -> list[d
             add("attachment_record", "已有图片消息记录", row.get("message_id", "") or "图片",
                 "asset_available" if row.get("image_available") is True else "asset_not_provided",
                 row, text)
+        for item in items:
+            if item["kind"] == "reported_material" and not re.search(r"吗|是否|有没有", text) and re.search(
+                rf"{re.escape(item['value'])}[^。；！？\n]{{0,8}}(?:没有|还没|未|没)(?:发|传|提供|给)"
+                rf"|(?:没有|还没|未|没)(?:发|传|提供|给)[^。；！？\n]{{0,8}}{re.escape(item['value'])}", text):
+                item["status"] = "current_report_conflicts_with_prior_upload"
+                item["conflict_basis"] = {"message_id": row.get("message_id", ""),
+                                          "session_id": row.get("session_id", own), "quote": text[:120]}
     for evidence in context.get("evidence", []):
         if evidence.get("type") != "order" or not evidence.get("id"):
             continue

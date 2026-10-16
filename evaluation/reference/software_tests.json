@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-15",
+  "revision": "compact-v13-service-continuity-1",
+  "command": "python -B -m pytest -q -p no:cacheprovider tests",
+  "passed": 441,
+  "skipped": 3,
+  "scope": "Software behavior regression using isolated test fixtures; optional research dependency checks skipped."
+}

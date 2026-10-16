@@ -1,0 +1,44 @@
+[
+  {
+    "id": "procedure-refund-v1", "title": "退款 核查 流水",
+    "content": "退款核查：先沿用关联订单和消费者已提供的信息，由客服核对退款流水、原支付去向和费用明细。退货后退款受阻时再查退货入库及售后关闭原因。缺失状态保留待核，不承诺到账时间。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["refund_request"], "version": "1"
+  },
+  {
+    "id": "procedure-logistics-v1", "title": "物流 核查 运单",
+    "content": "物流核查：客服先查已有发货记录与运单，再核承运方当前轨迹。签收却未收到时由客服核投递位置、代收和签收凭证。旧发货记录不能证明当前送达，不要求消费者自行查内部凭证，不承诺送达时间。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["logistics_query"], "version": "1"
+  },
+  {
+    "id": "procedure-address-v1", "title": "地址 修改 核查",
+    "content": "修改地址核查：先查当前配送节点和拦截改址可行性，再通过订单指定安全渠道确认新地址。提出改址不等于修改成功。多订单分别确认对应关系，不把一个订单的状态套给另一订单。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["order_query"], "version": "1"
+  },
+  {
+    "id": "procedure-item-v1", "title": "商品 问题 核查",
+    "content": "商品问题核查：先对照订单、买家所述实收情况和已有材料，再查出库装箱及分包。色号不一致时核订单规格及实收底标；材料已称提供时先核是否收到且可用，只补确有缺失或不清晰部分。不推断运输责任或商品原因。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["quality_issue"], "version": "1"
+  },
+  {
+    "id": "procedure-gift-v1", "title": "赠品 活动 核查",
+    "content": "赠品活动核查：对照购买时活动、资格、订单赠品字段和装箱分包记录。活动文案与订单字段不同只表示存在待核差异，不直接确认漏发或承诺补发。无适用活动资料时由客服继续核实。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["activity_inquiry"], "version": "1"
+  },
+  {
+    "id": "procedure-authenticity-v1", "title": "真伪 核查 规格",
+    "content": "真伪疑虑核查：由客服核商品规格、批次、订单来源及可核验渠道资料。沿用已有描述和材料，不以颜色气味差异直接鉴定真假，也不猜批次原因。需要人工核实的结论保留待核。",
+    "source": "本项目工程处理规范：src/knowledge/service_guidance.py；非品牌政策",
+    "verified": true, "review_status": "approved", "review_basis": "工程规范与回归检查；不表示品牌或人工业务审批",
+    "knowledge_type": "service_procedure", "usage_scope": "human_assistance_only", "applicable_intents": ["authenticity_check"], "version": "1"
+  }
+]
