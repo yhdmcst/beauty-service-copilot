@@ -20,6 +20,8 @@ def evidence_draft(context: dict, message: str, signals: dict) -> dict | None:
         return None
     if signals.get("valence", 0) != 0:
         return None
+    if context.get("runtime_inputs") or signals.get("request_plan", {}).get("requires_review"):
+        return None
     prior_messages = [
         row for row in (
             context.get("service_history", {}).get("messages", []) + context.get("messages", []))

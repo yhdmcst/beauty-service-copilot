@@ -170,6 +170,10 @@ def capture(output: Path, kind: str = "precheck") -> dict:
                 Path("src/agents/knowledge_agent.py"),
                 Path("src/knowledge/answerable_gate.py"),
                 Path("src/knowledge/rag_engine.py"),
+                Path("src/knowledge/service_state.py"),
+                Path("src/knowledge/response_plan.py"),
+                Path("src/orchestration/workbench_workflow.py"),
+                Path("src/ops/case_store.py"),
             ) if (ROOT / path).exists()
         },
         "cases": [],

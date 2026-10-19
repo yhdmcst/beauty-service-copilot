@@ -193,12 +193,12 @@ class CaseStore:
         with self._lock:
             if session_id:
                 rows = self._db.execute(
-                    "SELECT data FROM analyses WHERE session_id=? ORDER BY created_at DESC LIMIT ?",
+                    "SELECT data FROM analyses WHERE session_id=? ORDER BY created_at DESC, rowid DESC LIMIT ?",
                     (session_id, limit),
                 )
             else:
                 rows = self._db.execute(
-                    "SELECT data FROM analyses ORDER BY created_at DESC LIMIT ?", (limit,),
+                    "SELECT data FROM analyses ORDER BY created_at DESC, rowid DESC LIMIT ?", (limit,),
                 )
             return [json.loads(row["data"]) for row in rows]
 
