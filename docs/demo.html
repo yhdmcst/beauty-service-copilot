@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>实际演示 | 美妆客服共情副驾</title>
+  <style>
+    :root { font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; color: #202a2e; background: #f7f9f8; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: #237653; text-underline-offset: 4px; }
+    button, select { font: inherit; }
+    button, a, select { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, select:focus-visible { outline: 3px solid #b1d8ca; outline-offset: 4px; }
+    .wrap { width: min(1280px, calc(100% - 64px)); margin: 0 auto; }
+    header { background: #fff; border-bottom: 1px solid #e0e7e3; }
+    .topbar { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .wordmark { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; }
+    .mark { width: 24px; height: 24px; display: grid; place-items: center; color: #fff; background: #277858; border-radius: 4px; font-size: 14px; }
+    nav { display: flex; gap: 24px; font-size: 13px; flex-wrap: wrap; }
+    nav a { text-decoration: none; color: #65726d; }
+    nav a:hover { color: #237653; }
+    .intro { padding: 30px 0 24px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    h1 { margin: 0 0 9px; font-size: 30px; line-height: 1.35; overflow-wrap: anywhere; }
+    .intro p { margin: 0; color: #6a7770; font-size: 14px; line-height: 1.7; }
+    .version { color: #277858; font-size: 12px; padding-bottom: 3px; white-space: nowrap; }
+    .video-shell { background: #14191a; aspect-ratio: 967 / 544; overflow: hidden; border: 1px solid #d9e3de; }
+    video { display: block; width: 100%; height: 100%; object-fit: contain; background: #14191a; }
+    .player-meta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 15px 0 23px; border-bottom: 1px solid #dce5e0; font-size: 13px; }
+    .recording { display: flex; align-items: center; gap: 9px; color: #65726d; }
+    .recording::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #b45a48; flex: none; }
+    .player-options { display: flex; align-items: center; gap: 20px; }
+    .player-options label { display: flex; align-items: center; gap: 8px; color: #65726d; }
+    select { min-width: 72px; height: 30px; border: 1px solid #d2ded7; border-radius: 4px; background: #fff; color: #33443b; padding: 0 6px; font-size: 12px; }
+    .player-options a { white-space: nowrap; }
+    .screens { padding: 36px 0 44px; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    h2 { font-size: 20px; line-height: 1.4; margin: 0; }
+    .tabs { display: flex; align-items: center; border-bottom: 1px solid #d6e1db; gap: 20px; }
+    .tab { min-height: 40px; border: 0; border-bottom: 2px solid transparent; background: transparent; padding: 8px 0; color: #6b776f; font-size: 13px; cursor: pointer; }
+    .tab[aria-selected="true"] { border-color: #277858; color: #1e6145; font-weight: 700; }
+    figure { margin: 0; }
+    .shot { display: block; border: 1px solid #d7e1db; background: #fff; }
+    .shot img { display: block; width: 100%; aspect-ratio: 1440 / 1000; object-fit: contain; }
+    figcaption { display: flex; gap: 16px; padding: 14px 0; color: #69776e; font-size: 13px; line-height: 1.7; }
+    figcaption strong { color: #334c3e; white-space: nowrap; font-weight: 600; }
+    .context { padding: 28px 0 32px; border-top: 1px solid #dce5e0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .context h3 { font-size: 14px; margin: 0 0 8px; }
+    .context p { margin: 0; color: #69776e; font-size: 13px; line-height: 1.8; }
+    footer { padding: 20px 0 28px; border-top: 1px solid #dce5e0; color: #7c877f; font-size: 12px; }
+    .error { color: #984f3c; margin: 12px 0; font-size: 13px; line-height: 1.7; }
+    @media (max-width: 720px) {
+      .wrap { width: calc(100% - 32px); }
+      .topbar { padding: 14px 0; min-height: 64px; flex-wrap: wrap; gap: 12px; }
+      nav { gap: 16px; font-size: 12px; }
+      .intro { padding: 23px 0 18px; gap: 12px; align-items: flex-start; }
+      h1 { font-size: 24px; }
+      .intro p { font-size: 12px; }
+      .version { padding-top: 8px; font-size: 11px; }
+      .player-meta { gap: 12px; flex-wrap: wrap; padding-bottom: 18px; font-size: 12px; }
+      .player-options { width: 100%; justify-content: space-between; gap: 12px; }
+      .screens { padding-top: 26px; }
+      .section-head { gap: 10px; }
+      .tabs { width: 100%; justify-content: space-between; gap: 12px; }
+      figcaption { flex-direction: column; gap: 4px; font-size: 12px; }
+      .context { grid-template-columns: 1fr; gap: 22px; padding-top: 23px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="wordmark"><span class="mark" aria-hidden="true">共</span>美妆客服共情副驾</div>
+      <nav aria-label="文档导航">
+        <a href="../README.md">项目说明</a>
+        <a href="../运行指南.md">运行指南</a>
+        <a href="AGENT_DESIGN.md">Agent设计</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section aria-labelledby="video-title">
+      <div class="intro">
+        <div><h1 id="video-title">美妆客服共情副驾</h1><p>实际操作录像 · 聊天、订单、工单与人工跟进</p></div>
+        <span class="version">V10</span>
+      </div>
+      <div class="video-shell">
+        <video id="demo-video" controls playsinline preload="metadata" poster="media/video-poster.jpg" aria-label="实际操作演示视频">
+          <source src="media/demo.mp4" type="video/mp4">
+          当前浏览器无法播放，可<a href="media/demo.mp4">打开视频文件</a>。
+        </video>
+      </div>
+      <p id="video-error" class="error" hidden>视频未能加载，请确认media目录与本页一起下载，或直接打开同目录的视频文件。</p>
+      <div class="player-meta">
+        <div class="recording">原始操作录像 <span id="duration">03:28</span></div>
+        <div class="player-options">
+          <label for="speed">播放速度<select id="speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
+          <a href="media/demo.mp4" download="beauty-service-demo.mp4">下载MP4</a>
+        </div>
+      </div>
+    </section>
+    <section class="screens" aria-labelledby="screens-title">
+      <div class="section-head">
+        <h2 id="screens-title">实际界面</h2>
+        <div class="tabs" role="tablist" aria-label="选择界面">
+          <button class="tab" id="tab-workbench" role="tab" aria-controls="screen-panel" aria-selected="true" data-screen="workbench">客服工作台</button>
+          <button class="tab" id="tab-review" role="tab" aria-controls="screen-panel" aria-selected="false" data-screen="review" tabindex="-1">回复审核</button>
+          <button class="tab" id="tab-risk" role="tab" aria-controls="screen-panel" aria-selected="false" data-screen="risk" tabindex="-1">风险跟踪</button>
+        </div>
+      </div>
+      <figure id="screen-panel" role="tabpanel" aria-labelledby="tab-workbench">
+        <a id="screen-link" class="shot" href="media/workbench.png" target="_blank" rel="noopener"><img id="screen-image" src="media/workbench.png" alt="客服工作台实际截图" width="1440" height="1000"></a>
+        <figcaption><strong id="screen-label">客服工作台</strong><span id="screen-caption">同屏查看会话、聊天记录和辅助建议，按选定时点核查业务依据。</span></figcaption>
+      </figure>
+    </section>
+    <section class="context" aria-label="演示说明">
+      <div><h3>数据与操作</h3><p>画面使用赛题虚构业务数据。截图来自当前V10工作台的隔离演示环境，审核和任务操作不计入人工质量评估。原始视频为参赛者提供的独立录像，保留原样。</p></div>
+      <div><h3>人工决定，系统留痕</h3><p>模型提供可编辑的草稿与核查建议。客服审核、认领和更新任务；系统不自动发送客户消息，也不执行真实退款、补发或改址。</p></div>
+    </section>
+  </main>
+  <footer><div class="wrap">美妆客服共情副驾 · 本地演示 · 2026</div></footer>
+  <script>
+    (() => {
+      "use strict";
+      const video = document.getElementById("demo-video");
+      document.getElementById("speed").addEventListener("change", (event) => {
+        video.playbackRate = Number(event.target.value);
+      });
+      video.addEventListener("loadedmetadata", () => {
+        const seconds = Math.floor(video.duration);
+        if (Number.isFinite(seconds)) {
+          document.getElementById("duration").textContent =
+            String(Math.floor(seconds / 60)).padStart(2, "0") + ":" +
+            String(seconds % 60).padStart(2, "0");
+        }
+      });
+      video.addEventListener("error", () => { document.getElementById("video-error").hidden = false; });
+      const screens = {
+        workbench: {file:"workbench.png", title:"客服工作台", caption:"同屏查看会话、聊天记录和辅助建议，按选定时点核查业务依据。"},
+        review: {file:"reply-review.png", title:"回复审核", caption:"编辑回复草稿、保存审核记录，并为未解决的问题创建人工跟进任务。"},
+        risk: {file:"risk-dashboard.png", title:"风险跟踪", caption:"查看风险依据、负责人及处理状态，从看板返回原会话继续核查。"}
+      };
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      function select(tab) {
+        const screen = screens[tab.dataset.screen];
+        for (const item of tabs) {
+          item.setAttribute("aria-selected", String(item === tab));
+          item.tabIndex = item === tab ? 0 : -1;
+        }
+        document.getElementById("screen-panel").setAttribute("aria-labelledby", tab.id);
+        document.getElementById("screen-image").src = "media/" + screen.file;
+        document.getElementById("screen-image").alt = screen.title + "实际截图";
+        document.getElementById("screen-link").href = "media/" + screen.file;
+        document.getElementById("screen-label").textContent = screen.title;
+        document.getElementById("screen-caption").textContent = screen.caption;
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (event) => {
+          const offsets = {ArrowRight:1, ArrowLeft:-1, Home:-index, End:tabs.length - 1 - index};
+          if (!(event.key in offsets)) return;
+          event.preventDefault();
+          const next = tabs[(index + offsets[event.key] + tabs.length) % tabs.length];
+          select(next); next.focus();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
