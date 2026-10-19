@@ -6,7 +6,7 @@ from typing import Dict, Tuple
 from enum import Enum
 import re
 from src.risk.beauty_risk_rules import detect_risks, is_active_keyword
-from src.utils.service_requests import current_request_text, MISSING_OUTCOME_CUES
+from src.utils.service_requests import current_request_text, primary_request_text, request_plan, MISSING_OUTCOME_CUES
 from src.utils.service_issue_cues import reported_item_issues
 
 
@@ -142,7 +142,9 @@ class IntentAgent:
             return BeautyIntent.GENERAL_CONSULTATION
         if active("开票", "开发票", "开个发票", "电子发票", "发票", "开个票"):
             return BeautyIntent.INVOICE_REQUEST
-        if active("退款", "退钱", "退的款", "退的钱", "退回款", "申请退", "仅退款"):
+        if active("退款", "退钱", "退的款", "退的钱", "退回款", "申请退", "仅退款") or re.search(
+            r"钱.{0,4}(?:没回来|没到账)|(?:给我|帮我|还是)退了(?:吧)?", query
+        ):
             return BeautyIntent.REFUND_REQUEST
         if active("退货") and not price:
             return BeautyIntent.REFUND_REQUEST
@@ -198,7 +200,7 @@ class IntentAgent:
             (意图, 置信度)
         """
         original = query.lower()
-        query_lower = current_request_text(original)
+        query_lower = primary_request_text(original)
 
         # Safety-sensitive expressions take precedence over generic skin, ingredient,
         # comparison and refund terms that commonly occur in the same sentence.
@@ -206,7 +208,7 @@ class IntentAgent:
             return BeautyIntent.ALLERGY_REACTION, 0.95
         explicit = self._explicit_intent(query_lower)
         if explicit is not None:
-            return explicit, 0.90
+            return explicit, 0.75 if request_plan(original)["requires_review"] else 0.90
         
         # 统计每个意图匹配到的关键词数量
         intent_scores = {}

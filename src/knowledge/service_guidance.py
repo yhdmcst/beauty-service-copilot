@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 
 from src.risk.beauty_risk_rules import detect_risks, is_active_keyword
-from src.utils.service_requests import current_request_text
+from src.utils.service_requests import primary_request_text, request_plan
 from src.utils.service_issue_cues import reported_item_issues
 from src.knowledge.provided_information import supplied_information
 
@@ -118,7 +118,7 @@ def service_focus(message: str, intent: str) -> dict:
         is_active_keyword(message, term)
         for term in ("脸肿", "肿了", "接触性皮炎")
     )
-    message = current_request_text(message)
+    message = primary_request_text(message)
     item_issues = reported_item_issues(message)
     damage = any(issue["category"] == "product_usability_or_damage" for issue in item_issues)
     missing = any(issue["category"] == "missing_items" for issue in item_issues)
@@ -129,13 +129,17 @@ def service_focus(message: str, intent: str) -> dict:
         re.search(r"(?:少了?|差了?)\s*\d", message) or "差额" in message
     ):
         category = "refund_status_or_amount"
-    elif "退货" in message and any(term in message for term in ("退款", "售后", "退不出", "钱")):
+    elif "退货" in message and any(term in message for term in (
+        "退款", "售后", "退不出", "钱", "款项", "运费", "报销",
+    )):
         category = "return_refund"
     elif ("地址" in message and any(term in message for term in ("改", "填错", "错误", "转寄"))) or "改址" in message:
         category = "address_change"
     elif "尾款" in message or ("预售" in message and any(term in message for term in ("付", "定金"))):
         category = "pre_sale_payment"
-    elif any(term in message for term in ("退款", "退钱", "到账", "退不出", "少款")) or re.search(r"退的(?:钱|款)", message):
+    elif any(term in message for term in ("退款", "退钱", "到账", "退不出", "少款")) or re.search(
+        r"退的(?:钱|款)|钱.{0,4}没回来|(?:给我|帮我|还是)退了", message
+    ):
         category = "refund_status_or_amount"
     elif damage:
         category = "product_usability_or_damage"
@@ -168,6 +172,33 @@ def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> di
     category = focus.get("category", "general_service")
     reply, action = draft["suggested_reply"], draft["next_action"]
     issues, changes = [], {}
+    plan = request_plan(message)
+    active = [item for item in plan["items"] if item["status"] in {"active", "inquiry"}]
+    if category != "adverse_reaction_report" and len({item["order_scope"] for item in active}) > 1:
+        requests = list(dict.fromkeys(
+            f"{item['order_scope']}：{item['label']}" for item in active
+        ))
+        corrected = {
+            "summary": f"买家提出不同订单的事项：{'；'.join(requests)}，对应订单待核。",
+            "suggested_reply": (
+                f"您提到的事项需要分开处理：{'；'.join(requests)}。"
+                "先对照已有订单记录确认对应关系，只补充尚不明确的信息，再分别核查可办理路径。"
+            ),
+            "next_action": "客服对照已有订单确认各诉求的对应关系，再逐项核查处理路径",
+            "missing_info": list(dict.fromkeys(
+                draft.get("missing_info", []) + ["不同订单指代与具体订单的对应关系"]
+            ))[:5],
+        }
+        return {
+            "issues": [
+                {"field": field, "code": "multiple_order_binding_unconfirmed"}
+                for field, value in corrected.items() if draft.get(field) != value
+            ],
+            "changes": {
+                field: value for field, value in corrected.items()
+                if draft.get(field) != value
+            },
+        }
     requirements = ACTION_REQUIREMENTS.get(category, ())
     if any(not any(word in action for word in group) for group in requirements):
         issues.append({"field": "next_action", "code": "service_action_incomplete"})
@@ -177,11 +208,15 @@ def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> di
         r"(?:请您|烦请|麻烦您|能否|请提供|请问您|您是否)[^。；！？\n]{0,30}"
         r"(?:提供|发送|补充)?[^。；！？\n]{0,10}"
         r"(?:签收凭证|签收详情|装箱单|装箱记录|出库记录|退款流水)",
-        reply,
+        reply + "\n" + action,
     )
     if asks_for_record:
-        issues.append({"field": "suggested_reply", "code": "internal_record_requested_from_buyer"})
-        changes["suggested_reply"] = REPLIES.get(category, "需要由客服核查相关业务记录，再确认处理方案。")
+        field = "suggested_reply" if asks_for_record.start() < len(reply) else "next_action"
+        issues.append({"field": field, "code": "internal_record_requested_from_buyer"})
+        changes[field] = (
+            REPLIES.get(category, "需要由客服核查相关业务记录，再确认处理方案。")
+            if field == "suggested_reply" else NEXT_ACTION[category]
+        )
     has_order = any(item.get("type") == "order" and item.get("id") for item in context.get("evidence", []))
     if has_order and re.search(
         r"(?:请您|麻烦您|能否|可|请|需要)[^。；\n]{0,12}"
@@ -290,4 +325,46 @@ def review_guidance(draft: dict, context: dict, message: str, focus: dict) -> di
             )
         if at and shipped <= at:
             changes.setdefault("next_action", NEXT_ACTION["shipment_query"])
+    # Keep valid empathy and factual sentences when only one sentence violates
+    # a narrow burden or provenance rule. A whole canned reply can erase useful
+    # context that the model got right.
+    reply_codes = {item["code"] for item in issues if item["field"] == "suggested_reply"}
+    local_repairs = {
+        "internal_record_requested_from_buyer": "相关内部业务记录由客服核查，再向您反馈。",
+        "known_order_requested_again": "已有订单信息先沿用，仅补尚不明确的信息。",
+        "known_variant_requested_again": "先对照您已说明的色号和订单规格，确有缺失再补充。",
+        "after_sales_work_shifted_to_buyer": "退货入库、售后关闭原因和退款流水由客服核查。",
+        "batch_explanation_not_verified": "差异原因目前尚不能确定，需要客服核对规格、批次和渠道依据。",
+        "damage_cause_not_verified": "损坏原因尚待核实，由客服对照已有材料和出库记录继续核查。",
+        "tracking_work_shifted_to_buyer": "最新配送轨迹由客服按已有运单核查后反馈。",
+        "reported_defect_not_addressed": "先对照您反馈的商品问题和现有材料，再由客服核查售后路径。",
+    }
+    if len(reply_codes) == 1:
+        code = next(iter(reply_codes))
+        replacement = local_repairs.get(code)
+        if replacement:
+            sentences = re.findall(r"[^。！？；\n]+[。！？；\n]?", reply)
+            repaired = []
+            for sentence in sentences:
+                if (
+                    (code == "internal_record_requested_from_buyer"
+                     and re.search(r"请您|烦请|麻烦您|能否|请提供|请问您|您是否", sentence)
+                     and re.search(r"签收凭证|签收详情|装箱单|装箱记录|出库记录|退款流水", sentence))
+                    or (code == "known_order_requested_again"
+                        and re.search(r"(?:提供|告知|填写)[^。；\n]{0,8}订单(?:号|信息)", sentence))
+                    or (code == "known_variant_requested_again"
+                        and re.search(r"(?:提供|告知|告诉|请问)[^。；\n]{0,15}(?:色号|颜色)", sentence))
+                    or (code in {"after_sales_work_shifted_to_buyer", "tracking_work_shifted_to_buyer"}
+                        and re.search(r"麻烦您|建议您|请您|您自行", sentence))
+                    or (code in {"batch_explanation_not_verified", "damage_cause_not_verified"}
+                        and re.search(r"可能|由于|因为|导致|造成|引起", sentence))
+                    or (code == "reported_defect_not_addressed"
+                        and re.search(r"是否[^。；\n]{0,12}(?:完好|正常)|先[^。；\n]{0,12}(?:物流|签收)", sentence))
+                ):
+                    repaired.append(replacement)
+                else:
+                    repaired.append(sentence)
+            candidate = "".join(repaired)
+            if candidate and candidate != reply:
+                changes["suggested_reply"] = candidate
     return {"issues": issues, "changes": changes}

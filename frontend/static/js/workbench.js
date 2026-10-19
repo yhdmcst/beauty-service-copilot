@@ -1,6 +1,11 @@
 const $ = (id) => document.getElementById(id);
 const STATUS = { pending: "待处理", in_progress: "处理中", resolved: "已完成", cancelled: "已取消" };
 const DECISION = { accepted: "采纳", edited: "修改后采纳", rejected: "拒绝" };
+const REQUEST_STATUS = {
+  active: "当前事项", inquiry: "规则咨询", deferred: "暂缓",
+  conditional: "条件备选", cancelled: "已撤销", rejected: "明确否认",
+  historical: "历史事项", buyer_reported_resolved: "买家称已解决",
+};
 const EMOTION_SCENES = {
   allergy_anxiety: "不适相关担忧", price_dissatisfaction: "价格不满",
   effect_disappointment: "效果失望", purchase_hesitation: "购买犹豫", satisfaction: "满意",
@@ -48,6 +53,10 @@ function resetAssist() {
   $("review-editor").hidden = true;
   $("use-draft").disabled = $("create-task").disabled = true;
   $("missing-info").replaceChildren();
+  $("request-plan").replaceChildren();
+  $("request-plan-review").textContent = "尚未分析";
+  $("service-state").replaceChildren();
+  $("reply-plan").replaceChildren();
   $("communication-strategy").textContent = "尚未分析";
   $("communication-needs").replaceChildren();
   $("stated-preferences").replaceChildren();
@@ -184,6 +193,30 @@ function renderAssist(result) {
     result.model_status === "rule_evidence" ? "证据规则建议" :
     result.model_status === "fallback" ? "降级待复核" : result.cache_hit ? "缓存草稿" : "模型草稿";
   $("missing-info").replaceChildren(...result.missing_info.map((text) => node("li", text)));
+  const requestPlan = result.request_plan || {};
+  $("request-plan").replaceChildren(...(requestPlan.items || []).map((item) => node(
+    "li", `${item.label} · ${REQUEST_STATUS[item.status] || "待确认"} · ${item.order_scope}：${item.quote}`)));
+  $("request-plan-review").textContent = requestPlan.requires_review
+    ? `需要人工确认：${(requestPlan.review_reasons || []).join("；")}`
+    : (requestPlan.items || []).length ? "当前诉求没有发现顺序冲突" : "暂无结构化诉求";
+  const serviceState = result.service_state || {};
+  $("service-state").replaceChildren(
+    ...(serviceState.issues || []).map((item) => node(
+      "li", `${item.label} · ${REQUEST_STATUS[item.status] || "待确认"} · ${item.order_scope}`)),
+    ...(serviceState.transitions || []).map((item) => node(
+      "li", `状态变化：${REQUEST_STATUS[item.from] || "待确认"} → ${REQUEST_STATUS[item.to] || "待确认"} · ${item.basis?.quote || ""}`)),
+  );
+  if (serviceState.inherited_issue) {
+    $("service-state").append(node(
+      "li", `本轮沿用一个未解决事项：${serviceState.inherited_issue.label}`,
+    ));
+  }
+  const replyPlan = result.response_plan || {};
+  $("reply-plan").replaceChildren(
+    ...(replyPlan.staff_checks || []).map((item) => node("li", `客服先查：${item}`)),
+    ...(replyPlan.followup_candidates || []).map((item) => node(
+      "li", `必要追问：${item.action}`)),
+  );
   const brief = result.communication_brief || {};
   $("communication-strategy").textContent = brief.strategy || "结合当前问题核查后回复";
   $("communication-needs").replaceChildren(...(brief.needs || []).map((item) => node(

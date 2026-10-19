@@ -35,7 +35,14 @@ def supplied_information(context: dict, message: str, session_id: str) -> list[d
         "message_id": point, "message_text": message, "发送时间": cutoff, "session_id": own,
         "内容类型": selected.get("内容类型", "文本"), "image_available": selected.get("image_available", False),
     }
-    rows = prior[-12:] + [current]
+    runtime = []
+    if context.get("analysis_mode") == "snapshot":
+        runtime = [
+            row for row in context.get("runtime_inputs", [])
+            if row.get("session_id") == own and row.get("analysis_point") == point
+            and row.get("角色") == "买家" and row.get("message_text")
+        ]
+    rows = prior[-12:] + runtime[-12:] + [current]
     items, seen = [], set()
 
     def add(kind: str, label: str, value: str, status: str, row: dict, quote: str) -> None:

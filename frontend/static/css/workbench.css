@@ -106,6 +106,8 @@ summary { font-size: 11px; color: #4c7069; cursor: pointer; }
 .review-history { margin: 14px 0 24px; }
 .review-entry { font-size: 11px; border-bottom: 1px solid #e3ece8; padding: 8px 0; line-height: 1.55; }
 #missing-info, #trace { font-size: 11px; line-height: 1.7; color: #687e76; padding-left: 18px; }
+#request-plan, #service-state, #reply-plan { font-size: 11px; line-height: 1.7; color: #687e76; padding-left: 18px; overflow-wrap: anywhere; }
+#request-plan-review { line-height: 1.55; overflow-wrap: anywhere; }
 #communication-needs, #communication-basis { font-size: 11px; line-height: 1.7; color: #687e76; padding-left: 18px; overflow-wrap: anywhere; }
 #risk-reasons { font-size: 11px; line-height: 1.65; color: #75665b; padding-left: 18px; }
 #claim-checks { font-size: 11px; line-height: 1.65; color: #667b72; padding-left: 18px; overflow-wrap: anywhere; }
